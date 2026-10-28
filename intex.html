@@ -17,6 +17,44 @@
       <a href="#catalogo">Catálogo</a>
       <a href="#variados">Variados</a>
       <a href="#posproduccion">Posproducción</a>
+      <div class="nav-item-videojuegos">
+        <a href="#videojuegos" class="nav-btn-videojuegos">
+          <span class="nav-game-icon">🎮</span> Videojuegos
+          <span class="nav-badge-nuevo">Nuevo</span>
+        </a>
+        <!-- Previsualización dinámica flotante en el header -->
+        <div class="preview-dropdown-nav">
+          <div class="preview-dropdown-top">
+            <span class="preview-pulse-dot"></span> Previsualización Rápida
+          </div>
+          <div class="preview-dropdown-list">
+            <div class="preview-dropdown-item" onclick="location.href='#videojuegos'; setTimeout(function(){ abrirPrevisualizacion('futbol'); }, 200);">
+              <span class="p-icon">⚽</span>
+              <div class="p-text">
+                <strong>Fútbol Retro</strong>
+                <small>Arcade 8-bit con superpoderes</small>
+              </div>
+            </div>
+            <div class="preview-dropdown-item" onclick="location.href='#videojuegos'; setTimeout(function(){ abrirPrevisualizacion('pong'); }, 200);">
+              <span class="p-icon">🏒</span>
+              <div class="p-text">
+                <strong>Pong Ice Hockey</strong>
+                <small>Hockey neón &amp; alta velocidad</small>
+              </div>
+            </div>
+            <div class="preview-dropdown-item" onclick="location.href='#videojuegos'; setTimeout(function(){ abrirPrevisualizacion('shooter'); }, 200);">
+              <span class="p-icon">🎯</span>
+              <div class="p-text">
+                <strong>Zombie Siege 3D</strong>
+                <small>Shooter FPS de supervivencia</small>
+              </div>
+            </div>
+          </div>
+          <div class="preview-dropdown-footer">
+            <span>Haz clic para explorar la sección</span> &darr;
+          </div>
+        </div>
+      </div>
       <a href="#contacto">Contacto</a>
     </nav>
   </header>
@@ -164,6 +202,225 @@
     </div>
   </section>
 
+  <!-- SECCIÓN DE VIDEOJUEGOS -->
+  <section id="videojuegos" class="seccion seccion-videojuegos">
+    <div class="videojuegos-encabezado">
+      <div class="badge-videojuegos-centro">
+        <span class="badge-pulsante"></span>
+        <span>ÁREA INTERACTIVA &bull; DESARROLLO DE VIDEOJUEGOS</span>
+      </div>
+      <h2>Videojuegos</h2>
+      <p class="descripcionsection">
+        Proyectos interactivos desarrollados con Canvas, JavaScript y física dinámica.
+        Descubre los títulos a continuación y activa su previsualización dinámica interactiva.
+      </p>
+    </div>
+
+    <!-- Contenedor de tarjetas de videojuegos -->
+    <div class="contenedor-videojuegos">
+
+      <!-- Tarjeta 1: Fútbol Retro -->
+      <div class="tarjeta-juego" data-game="futbol">
+        <div class="preview-mini-canvas-wrap preview-futbol-bg" onclick="abrirPrevisualizacion('futbol')">
+          <div class="preview-badge-tipo">8-Bit Arcade</div>
+          <div class="preview-escena-retro">
+            <div class="escena-arco"></div>
+            <div class="escena-portero">🧤</div>
+            <div class="escena-balon">⚽</div>
+            <div class="escena-jugador">🏃‍♂️</div>
+            <div class="escena-poder">⚡ TURBO</div>
+          </div>
+          <div class="preview-hover-tag">
+            <span>👁️ Clic para ver previsualización dinámica</span>
+          </div>
+        </div>
+        <div class="info-juego">
+          <div class="juego-tags">
+            <span class="tag-modo">👥 1 y 2 Jugadores</span>
+            <span class="tag-tec">Canvas 2D</span>
+          </div>
+          <h3>Fútbol Retro</h3>
+          <p class="juego-desc">
+            Juego estilo arcade de ritmo rápido. Compite contra la máquina o un amigo, activa cajas de superpoderes misteriosos (turbo, imán, supertiro) y anota antes de que termine el reloj.
+          </p>
+          <div class="juego-controles-mini">
+            <span>🕹️ <strong>Controles:</strong> WASD / Flechas + Espacio / Enter</span>
+          </div>
+          <div class="juego-botones-accion">
+            <button type="button" class="btn-dinamico-preview" onclick="abrirPrevisualizacion('futbol')">
+              <span class="btn-glow-dot"></span>
+              <span class="btn-icono">👁️</span>
+              <span class="btn-texto">Previsualización Dinámica</span>
+            </button>
+            <button type="button" class="btn-vincular-placeholder" title="Pendiente de vincular carpeta de videojuegos">
+              <span class="btn-icono">🎮</span>
+              <span>Jugar Ahora</span>
+              <span class="badge-estado-pendiente">Pendiente</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjeta 2: Pong Ice Hockey -->
+      <div class="tarjeta-juego" data-game="pong">
+        <div class="preview-mini-canvas-wrap preview-pong-bg" onclick="abrirPrevisualizacion('pong')">
+          <div class="preview-badge-tipo">Cyberpunk Neon</div>
+          <div class="preview-escena-pong">
+            <div class="pong-linea-central"></div>
+            <div class="pong-puck"></div>
+            <div class="pong-raqueta pong-raqueta-izq"></div>
+            <div class="pong-raqueta pong-raqueta-der"></div>
+            <div class="pong-particulas">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="preview-hover-tag">
+            <span>👁️ Clic para ver previsualización dinámica</span>
+          </div>
+        </div>
+        <div class="info-juego">
+          <div class="juego-tags">
+            <span class="tag-modo">⚡ Alta Velocidad</span>
+            <span class="tag-tec">Neon Glow FX</span>
+          </div>
+          <h3>Pong Ice Hockey</h3>
+          <p class="juego-desc">
+            Air Hockey futurista sobre pista de hielo resbaladiza. Experimenta efectos visuales de neón, física de rebotes acelerados y un sistema de control ultra responsivo.
+          </p>
+          <div class="juego-controles-mini">
+            <span>🕹️ <strong>Controles:</strong> Ratón / Táctil / Teclado</span>
+          </div>
+          <div class="juego-botones-accion">
+            <button type="button" class="btn-dinamico-preview" onclick="abrirPrevisualizacion('pong')">
+              <span class="btn-glow-dot"></span>
+              <span class="btn-icono">👁️</span>
+              <span class="btn-texto">Previsualización Dinámica</span>
+            </button>
+            <button type="button" class="btn-vincular-placeholder" title="Pendiente de vincular carpeta de videojuegos">
+              <span class="btn-icono">🎮</span>
+              <span>Jugar Ahora</span>
+              <span class="badge-estado-pendiente">Pendiente</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjeta 3: Zombie Siege 3D -->
+      <div class="tarjeta-juego" data-game="shooter">
+        <div class="preview-mini-canvas-wrap preview-shooter-bg" onclick="abrirPrevisualizacion('shooter')">
+          <div class="preview-badge-tipo">FPS Survival 3D</div>
+          <div class="preview-escena-shooter">
+            <div class="shooter-mira-centro"></div>
+            <div class="shooter-hud-top">AMMO: 30 / 120</div>
+            <div class="shooter-target-zombie">🧟</div>
+            <div class="shooter-hud-bottom">HP 100% &bull; OLEADA 1</div>
+          </div>
+          <div class="preview-hover-tag">
+            <span>👁️ Clic para ver previsualización dinámica</span>
+          </div>
+        </div>
+        <div class="info-juego">
+          <div class="juego-tags">
+            <span class="tag-modo">🧟 Supervivencia</span>
+            <span class="tag-tec">Motor 3D</span>
+          </div>
+          <h3>Zombie Siege 3D</h3>
+          <p class="juego-desc">
+            Shooter en primera persona tridimensional. Defiéndete de oleadas de caminantes, administra tu munición, desbloquea mejoras y enfréntate a poderosos jefes de zona.
+          </p>
+          <div class="juego-controles-mini">
+            <span>🕹️ <strong>Controles:</strong> WASD + Ratón para apuntar y disparar</span>
+          </div>
+          <div class="juego-botones-accion">
+            <button type="button" class="btn-dinamico-preview" onclick="abrirPrevisualizacion('shooter')">
+              <span class="btn-glow-dot"></span>
+              <span class="btn-icono">👁️</span>
+              <span class="btn-texto">Previsualización Dinámica</span>
+            </button>
+            <button type="button" class="btn-vincular-placeholder" title="Pendiente de vincular carpeta de videojuegos">
+              <span class="btn-icono">🎮</span>
+              <span>Jugar Ahora</span>
+              <span class="badge-estado-pendiente">Pendiente</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- MODAL DINÁMICO INTERACTIVO DE PREVISUALIZACIÓN -->
+    <div id="modalPrevisualizacion" class="modal-preview-videojuego" onclick="cerrarPrevisualizacion(event)">
+      <div class="modal-preview-contenido">
+        <button type="button" class="modal-preview-cerrar" onclick="cerrarPrevisualizacion(null, true)" aria-label="Cerrar">&times;</button>
+        
+        <div class="modal-selector-juegos">
+          <button type="button" class="tab-juego-btn" id="tabFutbol" onclick="abrirPrevisualizacion('futbol')">⚽ Fútbol Retro</button>
+          <button type="button" class="tab-juego-btn" id="tabPong" onclick="abrirPrevisualizacion('pong')">🏒 Pong Ice Hockey</button>
+          <button type="button" class="tab-juego-btn" id="tabShooter" onclick="abrirPrevisualizacion('shooter')">🎯 Zombie Siege 3D</button>
+        </div>
+
+        <div class="modal-preview-grid">
+          <!-- Pantalla interactiva en vivo simulada -->
+          <div class="modal-pantalla-wrap">
+            <div class="modal-canvas-header">
+              <span class="live-dot-pulse">● EN VIVO</span>
+              <span id="modalPantallaTitulo">Simulación Dinámica de Gameplay</span>
+              <span class="fps-badge">60 FPS</span>
+            </div>
+            <canvas id="canvasPreviewLive" width="600" height="340"></canvas>
+            <div class="modal-canvas-footer">
+              <span id="modalCanvasTip">💡 Interactúa o mira la simulación generada dinámicamente</span>
+            </div>
+          </div>
+
+          <!-- Información y detalles del videojuego -->
+          <div class="modal-info-panel">
+            <div class="modal-badge-wrapper">
+              <span id="modalJuegoBadge" class="preview-badge-tipo">8-Bit Arcade</span>
+              <span class="badge-estado-ready">✔ Previsualización Activa</span>
+            </div>
+            <h3 id="modalJuegoTitulo">Fútbol Retro</h3>
+            <p id="modalJuegoDescripcion" class="modal-texto-desc"></p>
+
+            <div class="modal-ficha-tecnica">
+              <div class="ficha-item">
+                <span class="ficha-label">Modo de Juego:</span>
+                <span class="ficha-val" id="modalJuegoModo">1 o 2 Jugadores</span>
+              </div>
+              <div class="ficha-item">
+                <span class="ficha-label">Tecnología:</span>
+                <span class="ficha-val" id="modalJuegoMotor">HTML5 Canvas / JS puro</span>
+              </div>
+              <div class="ficha-item">
+                <span class="ficha-label">Controles:</span>
+                <span class="ficha-val" id="modalJuegoControles">WASD / Flechas + Espacio</span>
+              </div>
+            </div>
+
+            <!-- Banner indicador de vinculación de carpeta -->
+            <div class="modal-aviso-vinculo">
+              <div class="aviso-icon">📁</div>
+              <div class="aviso-cuerpo">
+                <strong>Vinculación de carpeta preparada</strong>
+                <p>Diseño y previsualización listos. A la espera de tus indicaciones para conectar los archivos de la carpeta <code>videojuegos/</code>.</p>
+              </div>
+            </div>
+
+            <div class="modal-acciones-footer">
+              <button type="button" class="btn-modal-accion btn-modal-cerrar" onclick="cerrarPrevisualizacion(null, true)">
+                Cerrar Previsualización
+              </button>
+              <button type="button" class="btn-modal-accion btn-modal-pendiente" title="Pendiente de vincular carpeta de videojuegos">
+                <span>🎮 Conectar archivo .html</span>
+                <span class="badge-mini-pendiente">Pronto</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 <!-- Contacto -->
 <!-- required hace que si el espacio del formulario esta vacio no se pueda enviar-->
 
@@ -214,5 +471,456 @@
   </form>
 </section>
 
+<!-- SCRIPT DE PREVISUALIZACIÓN DINÁMICA DE VIDEOJUEGOS -->
+<script>
+  // Datos informativos para las previsualizaciones de cada juego
+  const DATOS_JUEGOS = {
+    futbol: {
+      titulo: 'Fútbol Retro 2D',
+      badge: 'Arcade 8-Bit',
+      desc: 'Un tributo a los clásicos arcades de fútbol de la era de 8-bits. Cuenta con físicas de balón reactivas, cajas de superpoderes aleatorios en el campo (como turbo, disparo imán o congelamiento) y soporte para juego local de 1 o 2 jugadores.',
+      modo: '1 Jugador (vs CPU) o 2 Jugadores',
+      motor: 'HTML5 Canvas 2D + Física personalizada',
+      controles: 'WASD / Flechas para moverte; Espacio o Enter para patear',
+      tip: '⚽ Simulación en vivo: Golazos con física arcade y efectos retro'
+    },
+    pong: {
+      titulo: 'Pong Ice Hockey',
+      badge: 'Cyberpunk Neon',
+      desc: 'Reinvención electrizante de Pong combinada con la velocidad del hockey sobre hielo. Desarrollado con efectos visuales de neón cyberpunk, fricción dinámica de pista y rebotes a toda velocidad.',
+      modo: '1 Jugador con IA Adaptativa',
+      motor: 'HTML5 Canvas 2D + Glow Filters & Shaders',
+      controles: 'Movimiento con ratón, superficie táctil o teclas W/S',
+      tip: '🏒 Simulación en vivo: Rebotes acelerados con estela de partículas de neón'
+    },
+    shooter: {
+      titulo: 'Zombie Siege 3D',
+      badge: 'FPS Survival 3D',
+      desc: 'Intenso juego de disparos en primera persona en entorno tridimensional. Enfrenta oleadas de zombis con inteligencia artificial persecutora, administración táctica de cargadores y combate contra jefes de zona.',
+      modo: 'Supervivencia Individual por Oleadas',
+      motor: 'Motor de proyección 3D con Canvas y Raycasting',
+      controles: 'WASD para desplazarse, Ratón para apuntar y disparar, R para recargar',
+      tip: '🎯 Simulación en vivo: Mira táctica activa, cálculo de retroceso e impacto'
+    }
+  };
+
+  let juegoActivo = null;
+  let animId = null;
+
+  function abrirPrevisualizacion(juegoKey) {
+    const data = DATOS_JUEGOS[juegoKey];
+    if (!data) return;
+
+    juegoActivo = juegoKey;
+    const modal = document.getElementById('modalPrevisualizacion');
+    modal.classList.add('activo');
+
+    // Actualizar tabs activas
+    document.querySelectorAll('.tab-juego-btn').forEach(btn => btn.classList.remove('activa'));
+    if (juegoKey === 'futbol') document.getElementById('tabFutbol').classList.add('activa');
+    if (juegoKey === 'pong') document.getElementById('tabPong').classList.add('activa');
+    if (juegoKey === 'shooter') document.getElementById('tabShooter').classList.add('activa');
+
+    // Actualizar campos de texto
+    document.getElementById('modalJuegoTitulo').textContent = data.titulo;
+    document.getElementById('modalJuegoBadge').textContent = data.badge;
+    document.getElementById('modalJuegoDescripcion').textContent = data.desc;
+    document.getElementById('modalJuegoModo').textContent = data.modo;
+    document.getElementById('modalJuegoMotor').textContent = data.motor;
+    document.getElementById('modalJuegoControles').textContent = data.controles;
+    document.getElementById('modalCanvasTip').textContent = data.tip;
+
+    iniciarSimulacionCanvas(juegoKey);
+  }
+
+  function cerrarPrevisualizacion(event, forzar = false) {
+    if (forzar || (event && event.target.id === 'modalPrevisualizacion')) {
+      const modal = document.getElementById('modalPrevisualizacion');
+      modal.classList.remove('activo');
+      if (animId) {
+        cancelAnimationFrame(animId);
+        animId = null;
+      }
+    }
+  }
+
+  // Cerrar con la tecla Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      cerrarPrevisualizacion(null, true);
+    }
+  });
+
+  // ==========================================
+  // MOTOR DE SIMULACIONES GRÁFICAS EN CANVAS
+  // ==========================================
+  function iniciarSimulacionCanvas(tipo) {
+    const canvas = document.getElementById('canvasPreviewLive');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (animId) cancelAnimationFrame(animId);
+
+    let frame = 0;
+
+    // Estados para simulación de Fútbol
+    let fBall = { x: 200, y: 170, vx: 5, vy: 2, r: 8, golTimer: 0 };
+    let fPlayer = { x: 130, y: 170, leg: 0 };
+    let fGoalie = { x: 540, y: 170, vy: 3 };
+    let fGoles = 0;
+
+    // Estados para simulación de Pong
+    let pPuck = { x: 300, y: 170, vx: 6, vy: 4, r: 10 };
+    let pPadL = { y: 170 };
+    let pPadR = { y: 170 };
+    let pTrail = [];
+    let pScoreL = 3, pScoreR = 2;
+
+    // Estados para simulación de Shooter
+    let sCross = { x: 300, y: 170, targetX: 300, targetY: 170 };
+    let sZombie = { x: 300, y: 170, scale: 0.3, dir: 1, hp: 100 };
+    let sShotTimer = 0;
+    let sAmmo = 30;
+
+    function loop() {
+      frame++;
+      const w = canvas.width;
+      const h = canvas.height;
+
+      if (tipo === 'futbol') {
+        // --- SIMULACIÓN FÚTBOL RETRO ---
+        ctx.fillStyle = '#2d6a4f';
+        ctx.fillRect(0, 0, w, h);
+
+        // Franjas de pasto
+        ctx.fillStyle = '#22573f';
+        for (let i = 0; i < w; i += 60) {
+          ctx.fillRect(i, 0, 30, h);
+        }
+
+        // Líneas de cancha
+        ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(30, 20, w - 60, h - 40);
+        // Línea central y círculo
+        ctx.beginPath();
+        ctx.moveTo(w / 2, 20);
+        ctx.lineTo(w / 2, h - 20);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(w / 2, h / 2, 50, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Arcos
+        ctx.strokeStyle = '#fff';
+        ctx.strokeRect(w - 30, h / 2 - 50, 20, 100);
+        ctx.strokeRect(10, h / 2 - 50, 20, 100);
+
+        // Caja de poder flotante
+        const puY = h / 2 + Math.sin(frame * 0.05) * 35;
+        ctx.fillStyle = '#ffbe0b';
+        ctx.fillRect(280, puY - 14, 28, 28);
+        ctx.fillStyle = '#000';
+        ctx.font = 'bold 14px monospace';
+        ctx.fillText('⚡', 285, puY + 6);
+
+        // Actualizar física balón
+        if (fBall.golTimer > 0) {
+          fBall.golTimer--;
+          // Efecto de GOL
+          ctx.fillStyle = 'rgba(0,0,0,0.5)';
+          ctx.fillRect(0, 0, w, h);
+          ctx.fillStyle = (frame % 10 < 5) ? '#ffd166' : '#fff';
+          ctx.font = 'bold 44px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('¡¡GOOOOOOL!!', w / 2, h / 2);
+          ctx.font = 'bold 18px monospace';
+          ctx.fillStyle = '#fff';
+          ctx.fillText(`MARCADOR: AZUL ${fGoles} - 0 ROJO`, w / 2, h / 2 + 40);
+          ctx.textAlign = 'start';
+        } else {
+          fBall.x += fBall.vx;
+          fBall.y += fBall.vy;
+
+          if (fBall.y - fBall.r < 20 || fBall.y + fBall.r > h - 20) fBall.vy *= -1;
+
+          // Movimiento de jugador
+          fPlayer.x = Math.min(220, fPlayer.x + 1.5);
+          fPlayer.y += (fBall.y - fPlayer.y) * 0.08;
+
+          // Movimiento de portero
+          fGoalie.y += fGoalie.vy;
+          if (fGoalie.y < h / 2 - 40 || fGoalie.y > h / 2 + 40) fGoalie.vy *= -1;
+
+          // Gol detectado
+          if (fBall.x > w - 30 && fBall.y > h / 2 - 50 && fBall.y < h / 2 + 50) {
+            fGoles++;
+            fBall.golTimer = 45;
+            fBall.x = 200;
+            fBall.y = 170;
+            fBall.vx = 5;
+            fBall.vy = (Math.random() - 0.5) * 4;
+            fPlayer.x = 110;
+          } else if (fBall.x > w - 30 || fBall.x < 30) {
+            fBall.vx *= -1;
+          }
+
+          // Dibujar Balón con sombra
+          ctx.beginPath();
+          ctx.arc(fBall.x, fBall.y, fBall.r, 0, Math.PI * 2);
+          ctx.fillStyle = '#ffffff';
+          ctx.fill();
+          ctx.strokeStyle = '#000';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          // Jugador (Azul)
+          ctx.fillStyle = '#1d4ed8';
+          ctx.beginPath();
+          ctx.arc(fPlayer.x, fPlayer.y, 14, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#fff';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('10', fPlayer.x - 7, fPlayer.y + 4);
+
+          // Portero (Rojo)
+          ctx.fillStyle = '#dc2626';
+          ctx.beginPath();
+          ctx.arc(fGoalie.x, fGoalie.y, 13, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#fff';
+          ctx.fillText('1', fGoalie.x - 4, fGoalie.y + 4);
+
+          // Marcador superior retro
+          ctx.fillStyle = 'rgba(0,0,0,0.7)';
+          ctx.fillRect(w / 2 - 90, 24, 180, 28);
+          ctx.fillStyle = '#06d6a0';
+          ctx.font = 'bold 14px monospace';
+          ctx.fillText(`AZUL ${fGoles} : 0 ROJO`, w / 2 - 65, 43);
+        }
+
+      } else if (tipo === 'pong') {
+        // --- SIMULACIÓN PONG ICE HOCKEY ---
+        ctx.fillStyle = '#050b18';
+        ctx.fillRect(0, 0, w, h);
+
+        // Efecto rejilla neón de fondo
+        ctx.strokeStyle = 'rgba(39, 230, 255, 0.08)';
+        ctx.lineWidth = 1;
+        for (let x = 0; x < w; x += 30) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, h);
+          ctx.stroke();
+        }
+        for (let y = 0; y < h; y += 30) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(w, y);
+          ctx.stroke();
+        }
+
+        // Borde brillante de la pista
+        ctx.strokeStyle = '#27e6ff';
+        ctx.lineWidth = 3;
+        ctx.shadowColor = '#27e6ff';
+        ctx.shadowBlur = 15;
+        ctx.strokeRect(15, 15, w - 30, h - 30);
+
+        // Línea central neón
+        ctx.setLineDash([8, 8]);
+        ctx.beginPath();
+        ctx.moveTo(w / 2, 15);
+        ctx.lineTo(w / 2, h - 15);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.shadowBlur = 0;
+
+        // Físicas del disco
+        pPuck.x += pPuck.vx;
+        pPuck.y += pPuck.vy;
+
+        if (pPuck.y - pPuck.r < 18 || pPuck.y + pPuck.r > h - 18) {
+          pPuck.vy *= -1;
+        }
+
+        // Paletas IA
+        pPadL.y += (pPuck.y - pPadL.y) * 0.12;
+        pPadR.y += (pPuck.y - pPadR.y) * 0.10;
+
+        // Rebotes en paletas
+        if (pPuck.x - pPuck.r < 45 && Math.abs(pPuck.y - pPadL.y) < 40 && pPuck.vx < 0) {
+          pPuck.vx *= -1.05;
+        }
+        if (pPuck.x + pPuck.r > w - 45 && Math.abs(pPuck.y - pPadR.y) < 40 && pPuck.vx > 0) {
+          pPuck.vx *= -1.05;
+        }
+
+        // Reseteo si sale
+        if (pPuck.x < 15 || pPuck.x > w - 15) {
+          pPuck.x = w / 2;
+          pPuck.y = h / 2;
+          pPuck.vx = pPuck.vx > 0 ? -5 : 5;
+          pPuck.vy = (Math.random() - 0.5) * 6;
+        }
+
+        // Guardar estela de partículas
+        pTrail.push({ x: pPuck.x, y: pPuck.y, alpha: 1 });
+        if (pTrail.length > 14) pTrail.shift();
+
+        // Dibujar estela
+        pTrail.forEach((p, idx) => {
+          p.alpha -= 0.05;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, pPuck.r * (idx / 14), 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(39, 230, 255, ${p.alpha * 0.5})`;
+          ctx.fill();
+        });
+
+        // Dibujar paleta izquierda (Cyan)
+        ctx.shadowColor = '#27e6ff';
+        ctx.shadowBlur = 18;
+        ctx.fillStyle = '#27e6ff';
+        ctx.fillRect(30, pPadL.y - 35, 12, 70);
+
+        // Dibujar paleta derecha (Magenta)
+        ctx.shadowColor = '#ff3d5a';
+        ctx.fillStyle = '#ff3d5a';
+        ctx.fillRect(w - 42, pPadR.y - 35, 12, 70);
+
+        // Dibujar disco con glow intenso
+        ctx.shadowColor = '#ffffff';
+        ctx.shadowBlur = 20;
+        ctx.beginPath();
+        ctx.arc(pPuck.x, pPuck.y, pPuck.r, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffffff';
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Marcador digital superior
+        ctx.font = 'bold 22px Orbitron, sans-serif';
+        ctx.fillStyle = '#27e6ff';
+        ctx.fillText(`CYAN: ${pScoreL}`, w / 2 - 140, 50);
+        ctx.fillStyle = '#ff3d5a';
+        ctx.fillText(`RED: ${pScoreR}`, w / 2 + 50, 50);
+
+      } else if (tipo === 'shooter') {
+        // --- SIMULACIÓN ZOMBIE SIEGE 3D ---
+        ctx.fillStyle = '#0a0a0c';
+        ctx.fillRect(0, 0, w, h);
+
+        // Cielo nocturno estrellado
+        ctx.fillStyle = '#fff';
+        for (let i = 0; i < 30; i++) {
+          const sx = (i * 97) % w;
+          const sy = (i * 43) % (h / 2);
+          ctx.fillRect(sx, sy, 1.5, 1.5);
+        }
+
+        // Suelo en perspectiva 3D
+        ctx.strokeStyle = 'rgba(74, 222, 128, 0.25)';
+        ctx.lineWidth = 1.5;
+        const horizon = h / 2 + 10;
+        for (let i = -w; i < w * 2; i += 50) {
+          ctx.beginPath();
+          ctx.moveTo(w / 2, horizon);
+          ctx.lineTo(i, h);
+          ctx.stroke();
+        }
+        for (let y = horizon; y < h; y += 15 + (y - horizon) * 0.3) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(w, y);
+          ctx.stroke();
+        }
+
+        // Enemigo Zombi 3D que se acerca
+        sZombie.scale += 0.003;
+        if (sZombie.scale > 1.2) {
+          sZombie.scale = 0.25;
+          sZombie.x = w / 2 + (Math.random() - 0.5) * 200;
+        }
+        const zw = 70 * sZombie.scale;
+        const zh = 130 * sZombie.scale;
+        const zy = horizon + (h - horizon) * 0.7 - zh;
+
+        // Silueta del Zombi
+        ctx.fillStyle = '#15803d';
+        ctx.fillRect(sZombie.x - zw / 2, zy, zw, zh);
+        // Ojos rojos del zombi
+        ctx.fillStyle = '#ef4444';
+        ctx.fillRect(sZombie.x - zw / 4, zy + zh * 0.2, zw * 0.2, zh * 0.1);
+        ctx.fillRect(sZombie.x + zw / 8, zy + zh * 0.2, zw * 0.2, zh * 0.1);
+
+        // Barra de salud del enemigo
+        ctx.fillStyle = 'rgba(0,0,0,0.6)';
+        ctx.fillRect(sZombie.x - zw / 2, zy - 12, zw, 6);
+        ctx.fillStyle = '#ef4444';
+        ctx.fillRect(sZombie.x - zw / 2, zy - 12, zw * (sZombie.hp / 100), 6);
+
+        // Mira táctica (Crosshair) persiguiendo al zombi
+        sCross.targetX = sZombie.x + Math.sin(frame * 0.08) * 15;
+        sCross.targetY = zy + zh * 0.4 + Math.cos(frame * 0.08) * 10;
+        sCross.x += (sCross.targetX - sCross.x) * 0.15;
+        sCross.y += (sCross.targetY - sCross.y) * 0.15;
+
+        // Disparo periódico
+        sShotTimer++;
+        const dispara = (sShotTimer % 60 === 0);
+        if (dispara) {
+          // Destello de disparo (Muzzle flash)
+          ctx.fillStyle = 'rgba(255, 230, 100, 0.4)';
+          ctx.fillRect(0, 0, w, h);
+          sZombie.hp = Math.max(20, sZombie.hp - 25);
+          if (sAmmo > 0) sAmmo--;
+        }
+
+        // Dibujar Crosshair militar
+        const cx = sCross.x;
+        const cy = sCross.y;
+        ctx.strokeStyle = dispara ? '#ff0055' : '#00ffcc';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 18, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(cx - 28, cy); ctx.lineTo(cx - 8, cy);
+        ctx.moveTo(cx + 8, cy); ctx.lineTo(cx + 28, cy);
+        ctx.moveTo(cx, cy - 28); ctx.lineTo(cx, cy - 8);
+        ctx.moveTo(cx, cy + 8); ctx.lineTo(cx, cy + 28);
+        ctx.stroke();
+
+        if (dispara) {
+          ctx.fillStyle = '#ff0055';
+          ctx.font = 'bold 15px monospace';
+          ctx.fillText('¡HIT! -25 HP', cx + 25, cy - 10);
+        }
+
+        // HUD táctico
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        ctx.fillRect(15, h - 55, 220, 42);
+        ctx.strokeStyle = '#22c55e';
+        ctx.strokeRect(15, h - 55, 220, 42);
+
+        ctx.fillStyle = '#22c55e';
+        ctx.font = 'bold 13px monospace';
+        ctx.fillText('HP: [||||||||||||] 100%', 25, h - 35);
+        ctx.fillStyle = '#f59e0b';
+        ctx.fillText(`MUNICIÓN: ${sAmmo} / 120`, 25, h - 20);
+
+        // Oleada top right
+        ctx.fillStyle = 'rgba(0,0,0,0.7)';
+        ctx.fillRect(w - 150, 15, 135, 30);
+        ctx.fillStyle = '#ef4444';
+        ctx.font = 'bold 13px monospace';
+        ctx.fillText('OLEADA: 03/10', w - 138, 35);
+      }
+
+      animId = requestAnimationFrame(loop);
+    }
+
+    animId = requestAnimationFrame(loop);
+  }
+</script>
 </body>
 </html>
