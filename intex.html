@@ -49,6 +49,13 @@
                 <small>Shooter FPS de supervivencia</small>
               </div>
             </div>
+            <div class="preview-dropdown-item" onclick="location.href='#videojuegos'; setTimeout(function(){ abrirPrevisualizacion('cielo'); }, 200);">
+              <span class="p-icon">✈️</span>
+              <div class="p-text">
+                <strong>Cielo en Ruinas</strong>
+                <small>Combate aéreo &amp; simulación 3D</small>
+              </div>
+            </div>
           </div>
           <div class="preview-dropdown-footer">
             <span>Haz clic para explorar la sección</span> &darr;
@@ -243,6 +250,11 @@
           <p class="juego-desc">
             Juego estilo arcade de ritmo rápido. Compite contra la máquina o un amigo, activa cajas de superpoderes misteriosos (turbo, imán, supertiro) y anota antes de que termine el reloj.
           </p>
+          <div class="juego-detalles-grid">
+            <span class="detalle-chip">⚽ 11 Superpoderes</span>
+            <span class="detalle-chip">⏱️ Reloj Arcade</span>
+            <span class="detalle-chip">🧤 IA &amp; 2 Jugadores</span>
+          </div>
           <div class="juego-controles-mini">
             <span>🕹️ <strong>Controles:</strong> WASD / Flechas + Espacio / Enter</span>
           </div>
@@ -287,6 +299,11 @@
           <p class="juego-desc">
             Air Hockey futurista sobre pista de hielo resbaladiza. Experimenta efectos visuales de neón, física de rebotes acelerados y un sistema de control ultra responsivo.
           </p>
+          <div class="juego-detalles-grid">
+            <span class="detalle-chip">🏒 3 Dificultades</span>
+            <span class="detalle-chip">✨ Partículas Neón</span>
+            <span class="detalle-chip">❄️ Fricción de Hielo</span>
+          </div>
           <div class="juego-controles-mini">
             <span>🕹️ <strong>Controles:</strong> Ratón / Táctil / Teclado</span>
           </div>
@@ -328,11 +345,70 @@
           <p class="juego-desc">
             Shooter en primera persona tridimensional. Defiéndete de oleadas de caminantes, administra tu munición, desbloquea mejoras y enfréntate a poderosos jefes de zona.
           </p>
+          <div class="juego-detalles-grid">
+            <span class="detalle-chip">🧟 10 Oleadas</span>
+            <span class="detalle-chip">🎯 Balística 3D</span>
+            <span class="detalle-chip">💀 Jefes &amp; Tienda</span>
+          </div>
           <div class="juego-controles-mini">
             <span>🕹️ <strong>Controles:</strong> WASD + Ratón para apuntar y disparar</span>
           </div>
           <div class="juego-botones-accion">
             <button type="button" class="btn-dinamico-preview" onclick="abrirPrevisualizacion('shooter')">
+              <span class="btn-glow-dot"></span>
+              <span class="btn-icono">👁️</span>
+              <span class="btn-texto">Previsualización Dinámica</span>
+            </button>
+            <button type="button" class="btn-vincular-placeholder" title="Pendiente de vincular carpeta de videojuegos">
+              <span class="btn-icono">🎮</span>
+              <span>Jugar Ahora</span>
+              <span class="badge-estado-pendiente">Pendiente</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjeta 4: Cielo en Ruinas -->
+      <div class="tarjeta-juego" data-game="cielo">
+        <div class="preview-mini-canvas-wrap preview-cielo-bg" onclick="abrirPrevisualizacion('cielo')">
+          <div class="preview-badge-tipo">Combate Aéreo 3D</div>
+          <div class="preview-escena-cielo">
+            <div class="cielo-nube nube-1"></div>
+            <div class="cielo-nube nube-2"></div>
+            <div class="cielo-avion">✈️</div>
+            <div class="cielo-mira"></div>
+            <div class="cielo-radar-mini">
+              <span class="radar-barrido"></span>
+              <span class="radar-blip"></span>
+            </div>
+            <div class="cielo-disparos">
+              <span></span><span></span>
+            </div>
+            <div class="cielo-hud-mini">ALT: 1,450m &bull; 480 km/h</div>
+          </div>
+          <div class="preview-hover-tag">
+            <span>👁️ Clic para ver previsualización dinámica</span>
+          </div>
+        </div>
+        <div class="info-juego">
+          <div class="juego-tags">
+            <span class="tag-modo">✈️ Vuelo &amp; Dogfight</span>
+            <span class="tag-tec">Motor 3D Canvas</span>
+          </div>
+          <h3>Cielo en Ruinas</h3>
+          <p class="juego-desc">
+            Simulador de combate aéreo en 3D (Escuadrón Fénix). Pilota cazas tácticos sobre cielos en ruinas, realiza maniobras de medio giro evasivo, usa el radar a 360° y destruye escuadrones enemigos.
+          </p>
+          <div class="juego-detalles-grid">
+            <span class="detalle-chip">✈️ Radar 360° &amp; HUD</span>
+            <span class="detalle-chip">🔄 Giro en U Evasivo</span>
+            <span class="detalle-chip">🚀 Postquemador</span>
+          </div>
+          <div class="juego-controles-mini">
+            <span>🕹️ <strong>Controles:</strong> Ratón (orientación) + Clic / Espacio (disparo) + W (turbo)</span>
+          </div>
+          <div class="juego-botones-accion">
+            <button type="button" class="btn-dinamico-preview" onclick="abrirPrevisualizacion('cielo')">
               <span class="btn-glow-dot"></span>
               <span class="btn-icono">👁️</span>
               <span class="btn-texto">Previsualización Dinámica</span>
@@ -357,6 +433,7 @@
           <button type="button" class="tab-juego-btn" id="tabFutbol" onclick="abrirPrevisualizacion('futbol')">⚽ Fútbol Retro</button>
           <button type="button" class="tab-juego-btn" id="tabPong" onclick="abrirPrevisualizacion('pong')">🏒 Pong Ice Hockey</button>
           <button type="button" class="tab-juego-btn" id="tabShooter" onclick="abrirPrevisualizacion('shooter')">🎯 Zombie Siege 3D</button>
+          <button type="button" class="tab-juego-btn" id="tabCielo" onclick="abrirPrevisualizacion('cielo')">✈️ Cielo en Ruinas</button>
         </div>
 
         <div class="modal-preview-grid">
@@ -501,6 +578,15 @@
       motor: 'Motor de proyección 3D con Canvas y Raycasting',
       controles: 'WASD para desplazarse, Ratón para apuntar y disparar, R para recargar',
       tip: '🎯 Simulación en vivo: Mira táctica activa, cálculo de retroceso e impacto'
+    },
+    cielo: {
+      titulo: 'Cielo en Ruinas (Escuadrón Fénix)',
+      badge: 'Combate Aéreo 3D',
+      desc: 'Simulador táctico de combate aéreo en tercera persona. Pilota cazas de combate sobre un cielo postapocalíptico, realiza giros en U evasivos, utiliza el radar a 360°, administra el postquemador (turbo) y derriba escuadrones de cazas hostiles.',
+      modo: 'Combate Aéreo / Dogfight (1 Jugador)',
+      motor: 'Motor de Vuelo 3D Canvas + Horizonte Artificial & Radar Táctico',
+      controles: 'Ratón para cabeceo y alabeo; Clic / Espacio para ráfagas; W para turbo; U para giro en U',
+      tip: '✈️ Simulación en vivo: Maniobras de combate, radar a 360°, ráfagas láser y horizonte dinámico'
     }
   };
 
@@ -520,6 +606,7 @@
     if (juegoKey === 'futbol') document.getElementById('tabFutbol').classList.add('activa');
     if (juegoKey === 'pong') document.getElementById('tabPong').classList.add('activa');
     if (juegoKey === 'shooter') document.getElementById('tabShooter').classList.add('activa');
+    if (juegoKey === 'cielo') document.getElementById('tabCielo').classList.add('activa');
 
     // Actualizar campos de texto
     document.getElementById('modalJuegoTitulo').textContent = data.titulo;
@@ -580,6 +667,19 @@
     let sZombie = { x: 300, y: 170, scale: 0.3, dir: 1, hp: 100 };
     let sShotTimer = 0;
     let sAmmo = 30;
+
+    // Estados para simulación de Cielo en Ruinas
+    let aPlane = { x: 300, y: 220, bank: 0, speed: 480, alt: 1450 };
+    let aEnemy = { x: 320, y: 130, hp: 100 };
+    let aClouds = [
+      { x: 100, y: 70, s: 0.6, speed: 1.8 },
+      { x: 450, y: 110, s: 1.1, speed: 3.2 },
+      { x: 260, y: 50, s: 0.8, speed: 2.2 },
+      { x: 560, y: 85, s: 1.3, speed: 3.8 }
+    ];
+    let aTracers = [];
+    let aParticles = [];
+    let aRadarAngle = 0;
 
     function loop() {
       frame++;
@@ -914,6 +1014,209 @@
         ctx.fillStyle = '#ef4444';
         ctx.font = 'bold 13px monospace';
         ctx.fillText('OLEADA: 03/10', w - 138, 35);
+
+      } else if (tipo === 'cielo') {
+        // --- SIMULACIÓN CIELO EN RUINAS (Escuadrón Fénix) ---
+        // Movimiento de cabeceo y alabeo del caza
+        const targetBank = Math.sin(frame * 0.04) * 0.35;
+        aPlane.bank += (targetBank - aPlane.bank) * 0.1;
+        aPlane.x = w / 2 + Math.sin(frame * 0.04) * 60;
+        aPlane.y = h * 0.7 + Math.cos(frame * 0.03) * 12;
+        aPlane.alt = 1400 + Math.round(Math.sin(frame * 0.02) * 80);
+        aPlane.speed = 460 + Math.round(Math.cos(frame * 0.03) * 30);
+
+        // Cielo atmosférico táctico con degradado
+        const skyGrad = ctx.createLinearGradient(0, 0, 0, h);
+        skyGrad.addColorStop(0, '#091f24');
+        skyGrad.addColorStop(0.45, '#1e3f3b');
+        skyGrad.addColorStop(0.68, '#5d7d74');
+        skyGrad.addColorStop(1, '#1b2a26');
+        ctx.fillStyle = skyGrad;
+        ctx.fillRect(0, 0, w, h);
+
+        // Nubes en movimiento en el cielo
+        ctx.fillStyle = 'rgba(214, 255, 240, 0.12)';
+        aClouds.forEach(c => {
+          c.x -= c.speed;
+          if (c.x < -100) c.x = w + 100;
+          ctx.beginPath();
+          ctx.ellipse(c.x, c.y, 60 * c.s, 18 * c.s, aPlane.bank * 0.4, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        // Siluetas de ruinas en el horizonte
+        ctx.fillStyle = 'rgba(10, 24, 20, 0.7)';
+        for (let i = 0; i < 9; i++) {
+          const rx = (i * 85 + frame * 0.6) % (w + 100) - 50;
+          const rh = 35 + ((i * 19) % 30);
+          ctx.fillRect(rx, h * 0.58 - rh, 26, rh);
+        }
+
+        // Caza enemigo por delante
+        aEnemy.x = w / 2 + Math.sin(frame * 0.045 + 1) * 75;
+        aEnemy.y = h * 0.36 + Math.cos(frame * 0.035) * 22;
+
+        // Mira táctica / Retícula de fijación (Lock-on)
+        const retX = aEnemy.x;
+        const retY = aEnemy.y;
+        ctx.strokeStyle = '#ffd27a';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(retX - 16, retY - 16, 32, 32);
+        ctx.beginPath();
+        ctx.arc(retX, retY, 22, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Texto de objetivo fijado
+        ctx.font = 'bold 11px monospace';
+        ctx.fillStyle = '#5dffb0';
+        ctx.fillText('OBJETIVO FIJADO [CAZA HOSTIL]', retX - 65, retY - 26);
+
+        // Dibujar avión enemigo
+        ctx.save();
+        ctx.translate(aEnemy.x, aEnemy.y);
+        ctx.fillStyle = '#ff6b5a';
+        ctx.beginPath();
+        ctx.moveTo(0, -8);
+        ctx.lineTo(16, 6);
+        ctx.lineTo(4, 4);
+        ctx.lineTo(0, 10);
+        ctx.lineTo(-4, 4);
+        ctx.lineTo(-16, 6);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+
+        // Disparos / Ráfagas periódicas de ametralladora
+        if (frame % 8 === 0) {
+          aTracers.push({ x: aPlane.x - 20, y: aPlane.y - 12, tx: retX, ty: retY, prog: 0 });
+          aTracers.push({ x: aPlane.x + 20, y: aPlane.y - 12, tx: retX, ty: retY, prog: 0 });
+        }
+
+        // Trazadoras láser
+        ctx.strokeStyle = '#5dffb0';
+        ctx.lineWidth = 2.5;
+        for (let i = aTracers.length - 1; i >= 0; i--) {
+          const t = aTracers[i];
+          t.prog += 0.12;
+          const curX = t.x + (t.tx - t.x) * t.prog;
+          const curY = t.y + (t.ty - t.y) * t.prog;
+          ctx.beginPath();
+          ctx.moveTo(curX, curY);
+          ctx.lineTo(curX + (t.tx - t.x) * 0.08, curY + (t.ty - t.y) * 0.08);
+          ctx.stroke();
+
+          // Impacto en el blanco
+          if (t.prog >= 1) {
+            aTracers.splice(i, 1);
+            for (let p = 0; p < 4; p++) {
+              aParticles.push({
+                x: retX, y: retY,
+                vx: (Math.random() - 0.5) * 6,
+                vy: (Math.random() - 0.5) * 6,
+                life: 14
+              });
+            }
+          }
+        }
+
+        // Chispas de impacto
+        for (let i = aParticles.length - 1; i >= 0; i--) {
+          const p = aParticles[i];
+          p.x += p.vx; p.y += p.vy; p.life--;
+          ctx.fillStyle = '#ffd27a';
+          ctx.fillRect(p.x, p.y, 2.5, 2.5);
+          if (p.life <= 0) aParticles.splice(i, 1);
+        }
+
+        // Dibujar el Caza del Jugador (vista en tercera persona con alabeo)
+        ctx.save();
+        ctx.translate(aPlane.x, aPlane.y);
+        ctx.rotate(aPlane.bank);
+
+        // Estelas de postquemador
+        ctx.fillStyle = '#5dffb0';
+        ctx.shadowColor = '#5dffb0';
+        ctx.shadowBlur = 12;
+        ctx.beginPath();
+        ctx.ellipse(-10, 26 + Math.random() * 4, 3, 10, 0, 0, Math.PI * 2);
+        ctx.ellipse(10, 26 + Math.random() * 4, 3, 10, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Fuselaje del caza táctico
+        ctx.fillStyle = '#102220';
+        ctx.strokeStyle = '#5dffb0';
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.moveTo(0, -32); // Morro
+        ctx.lineTo(10, -6);
+        ctx.lineTo(48, 12); // Ala derecha
+        ctx.lineTo(48, 18);
+        ctx.lineTo(14, 18);
+        ctx.lineTo(16, 26); // Cola derecha
+        ctx.lineTo(0, 24);
+        ctx.lineTo(-16, 26); // Cola izquierda
+        ctx.lineTo(-14, 18);
+        ctx.lineTo(-48, 18); // Ala izquierda
+        ctx.lineTo(-48, 12);
+        ctx.lineTo(-10, -6);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // Cabina luminosa
+        ctx.fillStyle = '#ffd27a';
+        ctx.beginPath();
+        ctx.ellipse(0, -12, 4, 10, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        // Radar circular táctico (inferior derecho)
+        const radX = w - 65, radY = h - 65, radR = 42;
+        ctx.save();
+        ctx.fillStyle = 'rgba(6, 19, 15, 0.88)';
+        ctx.beginPath();
+        ctx.arc(radX, radY, radR, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#5dffb066';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(radX, radY, radR * 0.5, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Barrido del radar
+        aRadarAngle += 0.05;
+        ctx.strokeStyle = '#5dffb0';
+        ctx.beginPath();
+        ctx.moveTo(radX, radY);
+        ctx.lineTo(radX + Math.cos(aRadarAngle) * radR, radY + Math.sin(aRadarAngle) * radR);
+        ctx.stroke();
+
+        // Blip enemigo en el radar
+        ctx.fillStyle = '#ff6b5a';
+        ctx.beginPath();
+        ctx.arc(radX + 10, radY - 16, 3.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Blip del jugador
+        ctx.fillStyle = '#5dffb0';
+        ctx.beginPath();
+        ctx.arc(radX, radY, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        // HUD táctico superior
+        ctx.fillStyle = 'rgba(6, 15, 13, 0.8)';
+        ctx.fillRect(15, 15, 240, 44);
+        ctx.strokeStyle = '#5dffb044';
+        ctx.strokeRect(15, 15, 240, 44);
+
+        ctx.fillStyle = '#5dffb0';
+        ctx.font = 'bold 12px monospace';
+        ctx.fillText(`VEL: ${aPlane.speed} KM/H  ALT: ${aPlane.alt} M`, 25, 34);
+        ctx.fillStyle = '#ffd27a';
+        ctx.fillText('TURBO: [▮▮▮]  MUNICIÓN: ∞', 25, 50);
       }
 
       animId = requestAnimationFrame(loop);

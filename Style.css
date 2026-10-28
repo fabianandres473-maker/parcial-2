@@ -637,6 +637,8 @@ header nav {
    SECCIÓN DE VIDEOJUEGOS & PREVISUALIZACIONES DINÁMICAS
    ========================================================== */
 .seccion-videojuegos {
+  max-width: 1260px;
+  margin: 0 auto;
   padding-top: 60px;
   padding-bottom: 60px;
 }
@@ -670,12 +672,12 @@ header nav {
   animation: pulseDot 1.5s infinite;
 }
 
-/* Grilla de tarjetas de videojuegos */
+/* Grilla de tarjetas de videojuegos: organizada en 2 columnas y 2 filas */
 .contenedor-videojuegos {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
-  margin-top: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  margin-top: 30px;
 }
 
 .tarjeta-juego {
@@ -696,10 +698,10 @@ header nav {
   box-shadow: 0 20px 35px rgba(113, 48, 137, 0.18), 0 0 20px rgba(168, 85, 247, 0.15);
 }
 
-/* Contenedor de la escena gráfica mini */
+/* Contenedor de la escena gráfica mini ampliado */
 .preview-mini-canvas-wrap {
   position: relative;
-  height: 220px;
+  height: 260px;
   overflow: hidden;
   cursor: pointer;
   background: #0a0a12;
@@ -988,9 +990,168 @@ header nav {
   border-radius: 4px;
 }
 
+/* Animación Mini Cielo en Ruinas */
+.preview-cielo-bg {
+  background: radial-gradient(circle at 50% 40%, #153934, #04100e);
+}
+
+.preview-escena-cielo {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cielo-nube {
+  position: absolute;
+  background: rgba(93, 255, 176, 0.08);
+  border-radius: 50px;
+  filter: blur(4px);
+}
+
+.nube-1 {
+  width: 90px;
+  height: 24px;
+  top: 25px;
+  animation: nubeMover1 6s infinite linear;
+}
+
+.nube-2 {
+  width: 130px;
+  height: 30px;
+  top: 60px;
+  animation: nubeMover2 8s infinite linear;
+}
+
+@keyframes nubeMover1 {
+  0% { left: 110%; }
+  100% { left: -110px; }
+}
+
+@keyframes nubeMover2 {
+  0% { left: 110%; }
+  100% { left: -140px; }
+}
+
+.cielo-avion {
+  font-size: 34px;
+  position: absolute;
+  bottom: 30px;
+  z-index: 3;
+  filter: drop-shadow(0 0 10px rgba(93, 255, 176, 0.5));
+  animation: avionVolar 2.6s infinite alternate ease-in-out;
+}
+
+@keyframes avionVolar {
+  0% { transform: translate(-20px, 6px) rotate(-14deg); }
+  50% { transform: translate(0px, -4px) rotate(0deg); }
+  100% { transform: translate(22px, 8px) rotate(16deg); }
+}
+
+.cielo-mira {
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid #ffd27a;
+  border-radius: 50%;
+  position: absolute;
+  top: 36%;
+  box-shadow: 0 0 12px rgba(255, 210, 122, 0.5);
+  animation: miraCielo 2s infinite alternate ease-in-out;
+}
+
+.cielo-mira::before {
+  content: "";
+  position: absolute;
+  top: 50%; left: -6px; right: -6px; height: 1px;
+  background: #ffd27a;
+}
+
+.cielo-mira::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: -6px; bottom: -6px; width: 1px;
+  background: #ffd27a;
+}
+
+@keyframes miraCielo {
+  0% { transform: translate(-14px, -6px) scale(0.9); border-color: #ffd27a; }
+  100% { transform: translate(16px, 8px) scale(1.05); border-color: #5dffb0; }
+}
+
+.cielo-radar-mini {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(93, 255, 176, 0.4);
+  background: rgba(4, 16, 14, 0.85);
+  overflow: hidden;
+}
+
+.radar-barrido {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, rgba(93, 255, 176, 0.5) 0deg, transparent 60deg, transparent 360deg);
+  animation: radarGirar 2s infinite linear;
+}
+
+@keyframes radarGirar {
+  to { transform: rotate(360deg); }
+}
+
+.radar-blip {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #ff5a4a;
+  border-radius: 50%;
+  top: 10px;
+  right: 12px;
+  box-shadow: 0 0 5px #ff5a4a;
+}
+
+.cielo-disparos {
+  position: absolute;
+  bottom: 60px;
+  display: flex;
+  gap: 22px;
+}
+
+.cielo-disparos span {
+  width: 2px;
+  height: 14px;
+  background: #5dffb0;
+  box-shadow: 0 0 6px #5dffb0;
+  animation: disparoLaser 0.6s infinite ease-out;
+}
+
+@keyframes disparoLaser {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-70px); opacity: 0; }
+}
+
+.cielo-hud-mini {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: #5dffb0;
+  background: rgba(4, 16, 14, 0.75);
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(93, 255, 176, 0.25);
+}
+
 /* Información de la Tarjeta */
 .info-juego {
-  padding: 24px;
+  padding: 28px 30px;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -1004,9 +1165,9 @@ header nav {
 }
 
 .tag-modo, .tag-tec {
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  padding: 3px 9px;
+  padding: 4px 10px;
   border-radius: 6px;
 }
 
@@ -1021,34 +1182,58 @@ header nav {
 }
 
 .info-juego h3 {
-  font-size: 1.45rem;
+  font-size: 1.65rem;
   margin: 0 0 10px 0;
   color: var(--color-primario);
 }
 
 .juego-desc {
-  font-size: 0.93rem;
+  font-size: 0.98rem;
   color: #475569;
-  line-height: 1.55;
+  line-height: 1.6;
   margin: 0 0 16px 0;
   flex: 1;
+}
+
+/* Grilla de características detalladas */
+.juego-detalles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+}
+
+.detalle-chip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+  color: #334155;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .juego-controles-mini {
   background: #f8fafc;
   border-left: 3px solid var(--color-primario);
-  padding: 8px 12px;
-  border-radius: 0 6px 6px 0;
-  font-size: 0.82rem;
+  padding: 10px 14px;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.88rem;
   color: #334155;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
-/* BOTONES DE ACCIÓN */
+/* BOTONES DE ACCIÓN: en fila para mayor presencia en 2 columnas */
 .juego-botones-accion {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 12px;
   margin-top: auto;
 }
 
@@ -1115,7 +1300,8 @@ header nav {
   justify-content: center;
   gap: 8px;
   width: 100%;
-  padding: 11px 16px;
+  padding: 13px 14px;
+  box-sizing: border-box;
   background: #f8fafc;
   color: #64748b;
   border: 1.5px dashed #cbd5e1;
@@ -1458,14 +1644,23 @@ header nav {
 }
 
 /* ==========================================================
-   RESPONSIVE DESIGN ADICIONAL
+   RESPONSIVE DESIGN ADICIONAL (2 COLUMNAS X 2 FILAS)
    ========================================================== */
-@media (max-width: 900px) {
+@media (max-width: 880px) {
   .contenedor-videojuegos {
-    grid-template-columns: 1fr;
-    max-width: 500px;
+    grid-template-columns: 1fr !important;
+    max-width: 580px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .juego-botones-accion {
+    grid-template-columns: 1fr;
+  }
+
+  .juego-detalles-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
   }
 
   .modal-preview-grid {
