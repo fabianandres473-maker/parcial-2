@@ -32,13 +32,13 @@ var cv=document.getElementById('c'),g=cv.getContext('2d');
 var L=40,R=600,T=30,B=370,GY1=150,GY2=250,FPS=60;
 var s={mode:'menu',sel:0,two:false,time:120,sb:0,sr:0,pause:0,msg:''};
 var keys={},touch=null,kickReq=false,kick2=false;
-var ball,pl,cpu,kb,kr,fx,pu=[],parts=[],last=null,toast={t:'',c:'#fff',n:0},puT=200,tick=0,FT='"Press Start 2P",monospace';
+var ball,pl,cpu,kb,kr,fx,pu=[],parts=[],lastTouch=null,toast={t:'',c:'#fff',n:0},puT=200,tick=0,FT='"Press Start 2P",monospace';
 function fz(){return{turbo:0,shot:0,magnet:0,gk:0,slow:0,inv:0,slip:0,sleep:0,wide:0}}
 function ent(x,y,r,col){return{x:x,y:y,vx:0,vy:0,r:r,col:col,cd:0}}
 function reset(){
   pl=ent(200,200,10,'#2459c9');cpu=ent(440,200,10,'#c8372a');
   kb=ent(60,200,9,'#6f9cff');kr=ent(580,200,9,'#ff8a7a');
-  ball={x:320,y:200,vx:0,vy:0,r:5};fx={b:fz(),r:fz()};pu=[];last=null;puT=200;
+  ball={x:320,y:200,vx:0,vy:0,r:5};fx={b:fz(),r:fz()};  pu=[];lastTouch=null;puT=200;
 }
 reset();
 function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
@@ -74,7 +74,7 @@ function puStep(){
     var w=null;
     if(Math.hypot(pl.x-p.x,pl.y-p.y)<20)w='b';
     else if(Math.hypot(cpu.x-p.x,cpu.y-p.y)<20)w='r';
-    else if(last&&Math.hypot(ball.x-p.x,ball.y-p.y)<14)w=last;
+    else if(lastTouch&&Math.hypot(ball.x-p.x,ball.y-p.y)<14)w=lastTouch;
     if(w){apply(p.k,w);return false}
     return true;
   });
@@ -187,7 +187,7 @@ function hit(e){
   if(d<m&&d>0){
     var nx=dx/d,ny=dy/d,sp=Math.hypot(ball.vx,ball.vy)*0.6+2.2;
     ball.x=e.x+nx*m;ball.y=e.y+ny*m;
-    ball.vx=nx*sp+e.vx*0.9;ball.vy=ny*sp+e.vy*0.9;last=(e===pl||e===kb)?'b':'r';
+    ball.vx=nx*sp+e.vx*0.9;ball.vy=ny*sp+e.vy*0.9;lastTouch=(e===pl||e===kb)?'b':'r';
   }
 }
 function tryKick(e,dir){
@@ -195,7 +195,7 @@ function tryKick(e,dir){
   var sd=e===pl?'b':'r';
   if(d<e.r+ball.r+7&&!fx[sd].slip){
     var n=dir?norm(dir[0],dir[1]):norm(dx,dy),p=fx[sd].shot>0?14:8.5;
-    ball.vx=n[0]*p;ball.vy=n[1]*p;e.cd=22;last=sd;fx[sd].shot=0;
+    ball.vx=n[0]*p;ball.vy=n[1]*p;e.cd=22;lastTouch=sd;fx[sd].shot=0;
   }
 }
 function score(who){
@@ -255,9 +255,9 @@ function draw(){
     if(s.mode==='goal')goalFx();else overFx(t1,t2);
   }
 }
-var last=0,acc=0;
+var lastFrame=0,acc=0;
 function loop(t){
-  acc+=Math.min(100,t-last);last=t;
+  acc+=Math.min(100,t-lastFrame);lastFrame=t;
   while(acc>=1000/FPS){step();acc-=1000/FPS}
   draw();requestAnimationFrame(loop);
 }

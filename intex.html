@@ -28,34 +28,34 @@
             <span class="preview-pulse-dot"></span> Previsualización Rápida
           </div>
           <div class="preview-dropdown-list">
-            <div class="preview-dropdown-item" onclick="location.href='#videojuegos'; setTimeout(function(){ abrirPrevisualizacion('futbol'); }, 200);">
+            <a class="preview-dropdown-item" href="#videojuegos" onclick="setTimeout(function(){ abrirPrevisualizacion('futbol'); }, 200);">
               <span class="p-icon">⚽</span>
               <div class="p-text">
                 <strong>Fútbol Retro</strong>
                 <small>Arcade 8-bit con superpoderes</small>
               </div>
-            </div>
-            <div class="preview-dropdown-item" onclick="location.href='#videojuegos'; setTimeout(function(){ abrirPrevisualizacion('pong'); }, 200);">
+            </a>
+            <a class="preview-dropdown-item" href="#videojuegos" onclick="setTimeout(function(){ abrirPrevisualizacion('pong'); }, 200);">
               <span class="p-icon">🏒</span>
               <div class="p-text">
                 <strong>Pong Ice Hockey</strong>
                 <small>Hockey neón &amp; alta velocidad</small>
               </div>
-            </div>
-            <div class="preview-dropdown-item" onclick="location.href='#videojuegos'; setTimeout(function(){ abrirPrevisualizacion('shooter'); }, 200);">
+            </a>
+            <a class="preview-dropdown-item" href="#videojuegos" onclick="setTimeout(function(){ abrirPrevisualizacion('shooter'); }, 200);">
               <span class="p-icon">🎯</span>
               <div class="p-text">
                 <strong>Zombie Siege 3D</strong>
                 <small>Shooter FPS de supervivencia</small>
               </div>
-            </div>
-            <div class="preview-dropdown-item" onclick="location.href='#videojuegos'; setTimeout(function(){ abrirPrevisualizacion('cielo'); }, 200);">
+            </a>
+            <a class="preview-dropdown-item" href="#videojuegos" onclick="setTimeout(function(){ abrirPrevisualizacion('cielo'); }, 200);">
               <span class="p-icon">✈️</span>
               <div class="p-text">
                 <strong>Cielo en Ruinas</strong>
                 <small>Combate aéreo &amp; simulación 3D</small>
               </div>
-            </div>
+            </a>
           </div>
           <div class="preview-dropdown-footer">
             <span>Haz clic para explorar la sección</span> &darr;
@@ -264,11 +264,10 @@
               <span class="btn-icono">👁️</span>
               <span class="btn-texto">Previsualización Dinámica</span>
             </button>
-            <button type="button" class="btn-vincular-placeholder" title="Pendiente de vincular carpeta de videojuegos">
+            <a class="btn-jugar-ahora" href="videojuegos/futbol-retro.html">
               <span class="btn-icono">🎮</span>
               <span>Jugar Ahora</span>
-              <span class="badge-estado-pendiente">Pendiente</span>
-            </button>
+            </a>
           </div>
         </div>
       </div>
@@ -313,11 +312,10 @@
               <span class="btn-icono">👁️</span>
               <span class="btn-texto">Previsualización Dinámica</span>
             </button>
-            <button type="button" class="btn-vincular-placeholder" title="Pendiente de vincular carpeta de videojuegos">
+            <a class="btn-jugar-ahora" href="videojuegos/pong-hockey.html">
               <span class="btn-icono">🎮</span>
               <span>Jugar Ahora</span>
-              <span class="badge-estado-pendiente">Pendiente</span>
-            </button>
+            </a>
           </div>
         </div>
       </div>
@@ -359,11 +357,10 @@
               <span class="btn-icono">👁️</span>
               <span class="btn-texto">Previsualización Dinámica</span>
             </button>
-            <button type="button" class="btn-vincular-placeholder" title="Pendiente de vincular carpeta de videojuegos">
+            <a class="btn-jugar-ahora" href="videojuegos/shooter.html">
               <span class="btn-icono">🎮</span>
               <span>Jugar Ahora</span>
-              <span class="badge-estado-pendiente">Pendiente</span>
-            </button>
+            </a>
           </div>
         </div>
       </div>
@@ -413,11 +410,10 @@
               <span class="btn-icono">👁️</span>
               <span class="btn-texto">Previsualización Dinámica</span>
             </button>
-            <button type="button" class="btn-vincular-placeholder" title="Pendiente de vincular carpeta de videojuegos">
+            <a class="btn-jugar-ahora" href="videojuegos/cielo-en-ruinas.html">
               <span class="btn-icono">🎮</span>
               <span>Jugar Ahora</span>
-              <span class="badge-estado-pendiente">Pendiente</span>
-            </button>
+            </a>
           </div>
         </div>
       </div>
@@ -478,8 +474,8 @@
             <div class="modal-aviso-vinculo">
               <div class="aviso-icon">📁</div>
               <div class="aviso-cuerpo">
-                <strong>Vinculación de carpeta preparada</strong>
-                <p>Diseño y previsualización listos. A la espera de tus indicaciones para conectar los archivos de la carpeta <code>videojuegos/</code>.</p>
+                <strong>Juegos listos para jugar</strong>
+                <p>Abre el juego seleccionado desde su archivo en la carpeta <code>videojuegos/</code>.</p>
               </div>
             </div>
 
@@ -487,10 +483,9 @@
               <button type="button" class="btn-modal-accion btn-modal-cerrar" onclick="cerrarPrevisualizacion(null, true)">
                 Cerrar Previsualización
               </button>
-              <button type="button" class="btn-modal-accion btn-modal-pendiente" title="Pendiente de vincular carpeta de videojuegos">
-                <span>🎮 Conectar archivo .html</span>
-                <span class="badge-mini-pendiente">Pronto</span>
-              </button>
+              <a id="modalJugarAhora" class="btn-modal-accion btn-modal-jugar" href="videojuegos/futbol-retro.html">
+                <span>🎮 Jugar ahora</span>
+              </a>
             </div>
           </div>
         </div>
@@ -553,6 +548,7 @@
   // Datos informativos para las previsualizaciones de cada juego
   const DATOS_JUEGOS = {
     futbol: {
+      url: 'videojuegos/futbol-retro.html',
       titulo: 'Fútbol Retro 2D',
       badge: 'Arcade 8-Bit',
       desc: 'Un tributo a los clásicos arcades de fútbol de la era de 8-bits. Cuenta con físicas de balón reactivas, cajas de superpoderes aleatorios en el campo (como turbo, disparo imán o congelamiento) y soporte para juego local de 1 o 2 jugadores.',
@@ -562,6 +558,7 @@
       tip: '⚽ Simulación en vivo: Golazos con física arcade y efectos retro'
     },
     pong: {
+      url: 'videojuegos/pong-hockey.html',
       titulo: 'Pong Ice Hockey',
       badge: 'Cyberpunk Neon',
       desc: 'Reinvención electrizante de Pong combinada con la velocidad del hockey sobre hielo. Desarrollado con efectos visuales de neón cyberpunk, fricción dinámica de pista y rebotes a toda velocidad.',
@@ -571,6 +568,7 @@
       tip: '🏒 Simulación en vivo: Rebotes acelerados con estela de partículas de neón'
     },
     shooter: {
+      url: 'videojuegos/shooter.html',
       titulo: 'Zombie Siege 3D',
       badge: 'FPS Survival 3D',
       desc: 'Intenso juego de disparos en primera persona en entorno tridimensional. Enfrenta oleadas de zombis con inteligencia artificial persecutora, administración táctica de cargadores y combate contra jefes de zona.',
@@ -580,6 +578,7 @@
       tip: '🎯 Simulación en vivo: Mira táctica activa, cálculo de retroceso e impacto'
     },
     cielo: {
+      url: 'videojuegos/cielo-en-ruinas.html',
       titulo: 'Cielo en Ruinas (Escuadrón Fénix)',
       badge: 'Combate Aéreo 3D',
       desc: 'Simulador táctico de combate aéreo en tercera persona. Pilota cazas de combate sobre un cielo postapocalíptico, realiza giros en U evasivos, utiliza el radar a 360°, administra el postquemador (turbo) y derriba escuadrones de cazas hostiles.',
@@ -616,6 +615,7 @@
     document.getElementById('modalJuegoMotor').textContent = data.motor;
     document.getElementById('modalJuegoControles').textContent = data.controles;
     document.getElementById('modalCanvasTip').textContent = data.tip;
+    document.getElementById('modalJugarAhora').href = data.url;
 
     iniciarSimulacionCanvas(juegoKey);
   }
