@@ -106,6 +106,26 @@ header nav {
   text-decoration: none !important;
 }
 
+.nav-btn-vr {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 !important;
+  padding: 6px 14px;
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05));
+  transition: all 0.25s ease;
+}
+
+.nav-btn-vr:hover,
+.nav-btn-vr:focus-visible {
+  background: #ffffff;
+  color: var(--color-primario);
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
 .nav-game-icon {
   font-size: 1.15rem;
   animation: gameIconTilt 2s infinite ease-in-out;
@@ -716,6 +736,71 @@ header nav {
   transform: translateY(-8px);
   border-color: rgba(113, 48, 137, 0.5);
   box-shadow: 0 20px 35px rgba(113, 48, 137, 0.18), 0 0 20px rgba(168, 85, 247, 0.15);
+}
+
+.seccion-juegos-vr {
+  max-width: 1260px;
+  padding-top: 40px;
+  padding-bottom: 60px;
+}
+
+.tarjeta-vr {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.8fr) 1.2fr;
+  max-width: 900px;
+  margin: 30px auto 0;
+  overflow: hidden;
+  border: 1.5px solid rgba(113, 48, 137, 0.2);
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tarjeta-vr:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 32px rgba(113, 48, 137, 0.18);
+}
+
+.vr-arte {
+  display: flex;
+  min-height: 250px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #ffffff;
+  background: radial-gradient(circle at 50% 40%, #482260, #171023 75%);
+}
+
+.vr-icono {
+  font-size: 5rem;
+  filter: drop-shadow(0 0 18px rgba(216, 180, 254, 0.75));
+}
+
+.vr-etiqueta {
+  color: #e9d5ff;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.vr-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 28px;
+}
+
+.vr-info h3 {
+  margin: 14px 0 4px;
+  font-size: 1.7rem;
+}
+
+.vr-info p {
+  margin: 8px 0 20px;
+  line-height: 1.6;
 }
 
 /* Contenedor de la escena gráfica mini ampliado */
@@ -1671,5 +1756,19 @@ header nav {
 
   .modal-preview-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .tarjeta-vr {
+    grid-template-columns: 1fr;
+  }
+
+  .vr-arte {
+    min-height: 190px;
+  }
+
+  .vr-info {
+    padding: 22px;
   }
 }

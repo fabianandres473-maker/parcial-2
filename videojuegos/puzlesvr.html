@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Umbral · Ed. Extendida</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0b1519;--chalk:#eef6f2;--cyan:#3de0cf;--amber:#ffb42e;--rose:#ff4f8b;--violet:#b58cff}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--ink);color:var(--chalk);font-family:"Chakra Petch",system-ui,sans-serif;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+video{position:fixed;width:1px;height:1px;opacity:0;pointer-events:none}
+canvas{position:fixed;inset:0;width:100%;height:100%}
+#hud{position:fixed;left:0;right:0;top:0;padding:calc(env(safe-area-inset-top,0px) + 10px) 14px 18px;pointer-events:none;background:linear-gradient(var(--ink),transparent)}
+#hud h1{margin:0;font-size:18px;display:flex;justify-content:space-between;align-items:center}
+#hud p{margin:3px 0 0;font-size:13px;opacity:.9;max-width:46ch;line-height:1.3}
+#msg{position:fixed;left:0;right:0;bottom:0;padding:18px 14px calc(env(safe-area-inset-bottom,0px) + 12px);font-size:13px;text-align:center;background:linear-gradient(transparent,var(--ink));pointer-events:none}
+#panel{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;gap:16px;padding:28px;background:rgba(11,21,25,.94);z-index:10;overflow-y:auto}
+#panel h2{margin:0;font-size:clamp(30px,6vw,48px);line-height:1;color:var(--cyan)}
+#panel p{margin:0;max-width:52ch;line-height:1.5;font-size:15px}
+.menu-content{width:min(720px,100%);margin:auto;display:flex;flex-direction:column;gap:16px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+button,.menu-link{font:inherit;font-weight:700;font-size:16px;padding:13px 20px;border:0;border-radius:10px;background:var(--cyan);color:var(--ink);cursor:pointer;text-decoration:none;text-align:center}
+button:hover,.menu-link:hover{filter:brightness(1.1);transform:translateY(-1px)}
+button.sec,.menu-link.sec{background:rgba(238,246,242,.15);color:var(--chalk);border:1px solid rgba(238,246,242,.25)}
+.level-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;max-height:min(55vh,520px);overflow-y:auto;padding:2px 6px 2px 2px}
+.level-option{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;background:rgba(238,246,242,.1);color:var(--chalk);border:1px solid rgba(61,224,207,.35);font-size:14px}
+.level-option strong{color:var(--cyan);font-size:15px}
+.level-option span{font-size:12px;font-weight:500;opacity:.8}
+.menu-eyebrow{color:var(--amber);font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+.hide{display:none!important}
+</style>
+</head>
+<body>
+<video id="v" playsinline muted></video>
+<canvas id="c"></canvas>
+<div id="hud">
+  <h1><span id="t"></span><span id="timer"></span></h1>
+  <p id="h"></p>
+</div>
+<div id="msg"></div>
+<div id="panel">
+  <div class="menu-content">
+    <span class="menu-eyebrow">Puzles VR · Edición extendida</span>
+    <h2 id="pt">Umbral</h2>
+    <p id="pp">15 laberintos de dificultad creciente. Recolecta cristales, supera láseres sincronizados, corrientes, hielo, portales y domina todos tus sensores.</p>
+    <div id="home-actions" class="row">
+      <button id="go" type="button">Iniciar partida</button>
+      <button id="sel" type="button" class="sec">Ver niveles</button>
+      <a class="menu-link sec" href="../intex.html">Volver a la página</a>
+    </div>
+    <div id="level-picker" class="hide">
+      <div id="level-grid" class="level-grid"></div>
+      <div class="row">
+        <button id="levels-back" type="button" class="sec">Volver al menú</button>
+        <a class="menu-link sec" href="../intex.html">Volver a la página</a>
+      </div>
+    </div>
+    <div id="result-actions" class="row hide">
+      <button id="result-go" type="button"></button>
+      <button id="result-levels" type="button" class="sec">Ver niveles</button>
+      <button id="result-home" type="button" class="sec">Menú de inicio</button>
+    </div>
+    <div id="pause-actions" class="row hide">
+      <button id="resume" type="button">Continuar nivel</button>
+      <button id="pause-home" type="button" class="sec">Volver al menú de inicio</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const cv = $('c'), g = cv.getContext('2d'), vid = $('v');
+const sm = document.createElement('canvas');
+const sg = sm.getContext('2d', { willReadFrequently: true });
+const K = 8;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+/* ---------- Leyenda del Mapa ----------
+  # : Pared sólida
+  S : Salida
+  G : Meta (si hay cristales '*', se abre al recogerlos todos)
+  * : Cristal de energía obligatorio para abrir G
+  X : Abismo (reinicia posición y resta cristales no asegurados)
+  T : Portal (en parejas)
+  P / p : Láseres intermitentes (P activo en fase par, p activo en fase impar)
+  > < ^ v : Corrientes de viento/cinta que empujan la bola
+  O : Bumper de rebote elástico
+  A, B, F : Sensores de movimiento (mano frente a cámara) -> abren a, b, f
+  C : Sensor de sacudida -> abre c
+  D : Sensor de soplido (micrófono) -> abre d
+  E : Sensor de oscuridad (tapar cámara) -> abre e
+  K : Llave física -> abre k
+*/
+const COL = {
+  a: '#ffb42e', b: '#ff4f8b', f: '#3de0cf',
+  c: '#b58cff', d: '#6cc4ff', e: '#eef6f2', k: '#7be07b'
+};
+const SENS = {
+  A: ['wave', 'a', '✋'], B: ['wave', 'b', '✋'], F: ['wave', 'f', '✋'],
+  C: ['shake', 'c', '📳'], D: ['sound', 'd', '💨'],
+  E: ['dark', 'e', '🌑'], K: ['touch', 'k', '🗝']
+};
+
+const LEVELS = [
+  {
+    name: '1. Despertar', mode: 'tilt',
+    hint: 'Inclina el móvil para rodar hasta la meta azul. (PC: flechas)',
+    map: [
+      '#########',
+      '#S..#...#',
+      '#.#.#.#.#',
+      '#.#...#.#',
+      '#.#####.#',
+      '#.....#.#',
+      '###.###.#',
+      '#...#...#',
+      '#.#####.#',
+      '#.#.....#',
+      '#.#.###.#',
+      '#...#..G#',
+      '#########'
+    ]
+  },
+  {
+    name: '2. Cristales y Mano', mode: 'tilt',
+    hint: 'Recoge los 3 cristales (◆) para activar la meta y agita la mano en ✋ para abrir.',
+    map: [
+      '#########',
+      '#S.*.#.A#',
+      '#.###.#.#',
+      '#.#...#.#',
+      '#.#.###.#',
+      '#.#a..*.#',
+      '#.#.###.#',
+      '#...#...#',
+      '###.#.###',
+      '#*.B#b.G#',
+      '#########'
+    ]
+  },
+  {
+    name: '3. Pista de Hielo', mode: 'tilt', ice: true, time: 75,
+    hint: 'Suelo helado sin fricción. Esquiva los abismos y recoge ambos cristales.',
+    map: [
+      '###########',
+      '#S........#',
+      '#.X.X.X.X.#',
+      '#...*.....#',
+      '#X.X.X.X.X#',
+      '#.........#',
+      '#.X.X.X.X.#',
+      '#.....*...#',
+      '#X.X.X.X..#',
+      '#........G#',
+      '###########'
+    ]
+  },
+  {
+    name: '4. Pulso Láser', mode: 'tilt', time: 80,
+    hint: 'Las barreras láser alternan cada 2 segundos. Ten paciencia y cruza en el ritmo exacto.',
+    map: [
+      '###########',
+      '#S..P....*#',
+      '###.###.###',
+      '#...p...#.#',
+      '#.#####.#.#',
+      '#.*...P...#',
+      '#.#####.###',
+      '#.....p..G#',
+      '###########'
+    ]
+  },
+  {
+    name: '5. Corrientes de Aire', mode: 'tilt', time: 85,
+    hint: 'Las flechas empujan la bola. Esquiva los bumpers (◎), coge la llave y abre la puerta.',
+    map: [
+      '###########',
+      '#S.>>>>..K#',
+      '#.#######.#',
+      '#v..O..*k.#',
+      '#v.######.#',
+      '#v.#...#..#',
+      '#..#.*.#.X#',
+      '#..O.^.#..#',
+      '#.####^#..#',
+      '#....<<<<G#',
+      '###########'
+    ]
+  },
+  {
+    name: '6. Cámara Oscura', mode: 'tilt', time: 95,
+    hint: 'Lleva la bola a 🌑 y tapa la cámara. Usa los portales morados para cruzar el muro.',
+    map: [
+      '###########',
+      '#S...E#T.*#',
+      '#.###e#.#.#',
+      '#.#..T#.#.#',
+      '#.#####.#.#',
+      '#.*...#...#',
+      '#.###.#####',
+      '#...#....G#',
+      '###########'
+    ]
+  },
+  {
+    name: '7. Aliento y Sacudida', mode: 'tilt', time: 100,
+    hint: 'Sopla en 💨, sacude en 📳 y recoge los 3 cristales antes de que se agote el tiempo.',
+    map: [
+      '###########',
+      '#S..D..#.*#',
+      '#.######.##',
+      '#.#.*###..#',
+      '#.#d#####.#',
+      '#...C...c.#',
+      '#########.#',
+      '#.*......G#',
+      '###########'
+    ]
+  },
+  {
+    name: '8. Objeto Magnético', mode: 'magnet', time: 85,
+    hint: 'Toca un objeto de color vivo en pantalla: la bola lo seguirá. Cuidado con los láseres.',
+    map: [
+      '###########',
+      '#S...X...*#',
+      '#.###.###.#',
+      '#.#.P...#.#',
+      '#.#.###.#.#',
+      '#...#.*p..#',
+      '#.###.###.#',
+      '#..X.....G#',
+      '###########'
+    ]
+  },
+  {
+    name: '9. Niebla Densa', mode: 'tilt', fog: true, time: 110,
+    hint: 'Visibilidad mínima. Memoriza los pasillos, recoge 3 cristales y abre la puerta naranja.',
+    map: [
+      '###########',
+      '#S#...*...#',
+      '#.#.##.##.#',
+      '#.#.#...#.#',
+      '#...#.A.#.#',
+      '#####.###.#',
+      '#.*.#...#.#',
+      '#.#####a#.#',
+      '#.......#.#',
+      '#.#####.#*#',
+      '#......G###',
+      '###########'
+    ]
+  },
+  {
+    name: '10. Tormenta Helada', mode: 'tilt', ice: true, fog: true, time: 110,
+    hint: 'Hielo + Niebla. Avanza con toques suaves o caerás al vacío.',
+    map: [
+      '###########',
+      '#S....#..*#',
+      '#.XX..#.#X#',
+      '#.....#.#.#',
+      '#.###...#.#',
+      '#.*X#.XX..#',
+      '#.###.....#',
+      '#.....XX.*#',
+      '#.###....G#',
+      '###########'
+    ]
+  },
+  {
+    name: '11. Imán Inverso', mode: 'magnet', invert: true, time: 95,
+    hint: 'El objeto magnético ahora REPELE la bola en lugar de atraerla. ¡Empújala con cuidado!',
+    map: [
+      '###########',
+      '#S...X..X*#',
+      '#.###.###.#',
+      '#...X*..#.#',
+      '#.#####.#.#',
+      '#.*...X...#',
+      '#.#######.#',
+      '#........G#',
+      '###########'
+    ]
+  },
+  {
+    name: '12. Laberinto Sincronizado', mode: 'tilt', time: 120,
+    hint: 'Tres puertas de mano (✋) y láseres alternos. Abre todo el circuito.',
+    map: [
+      '#############',
+      '#S..A#..B#.*#',
+      '#.####.###.##',
+      '#.#..P.b.#..#',
+      '#.#.####.##.#',
+      '#a..#p.F.##.#',
+      '###.#p#####.#',
+      '#.*.#p....f.#',
+      '###########.#',
+      '#*f........G#',
+      '#############'
+    ]
+  },
+  {
+    name: '13. Espejismo Invertido', mode: 'tilt', invert: true, time: 120,
+    hint: 'Controles de inclinación invertidos. Usa los portales y corrientes a tu favor.',
+    map: [
+      '#############',
+      '#S..>>>>..#T#',
+      '#.#######.#.#',
+      '#.#.*...#.#.#',
+      '#.#.###.#.#.#',
+      '#T..#K..#.#*#',
+      '#########.###',
+      '#*..k...p..G#',
+      '#############'
+    ]
+  },
+  {
+    name: '14. Cámara de Pruebas', mode: 'tilt', time: 140,
+    hint: 'Combina llave, soplido, oscuridad y sacudida en un solo recorrido.',
+    map: [
+      '#############',
+      '#S..K#..D..*#',
+      '#.####.####.#',
+      '#.#..k.#..d.#',
+      '#.#.####.##.#',
+      '#...E...#...#',
+      '#.#####e#.C.#',
+      '#.*...#...c.#',
+      '#.###.#####.#',
+      '#..........G#',
+      '#############'
+    ]
+  },
+  {
+    name: '15. El Gran Umbral', mode: 'tilt', invert: true, time: 180,
+    hint: 'Desafío final: controles invertidos, hielo en el núcleo, 4 cristales y todos los sensores.',
+    map: [
+      '#############',
+      '#S..K#..A..*#',
+      '#.####.####.#',
+      '#.#..k.#*pa.#',
+      '#.#.####p####',
+      '#...C..#.pcT#',
+      '#############',
+      '#T..E...#ppp#',
+      '#X#####e#.#*#',
+      '#...#..D..###',
+      '#.#.#.#######',
+      '#*#.d.....*G#',
+      '#############'
+    ]
+  }
+];
+
+/* ---------- Estado ---------- */
+let W, H, dpr, cs, ox, oy, sw, sh;
+let cam = false, hasTilt = false, running = false, paused = false, done = false;
+let lv, idx = 0, grid, open, zones, goal, gemsTotal = 0, gemsGot = 0;
+const ball = { x: 0, y: 0, vx: 0, vy: 0 }, R = 0.28;
+const tilt = { x: 0, y: 0 }, keys = {};
+let prevLum = null, mask = null, glob = 0, lastRGBA = null;
+let trackCol = null, target = null, lostT = 0, pointer = null, lastMsg = '';
+let deaths = 0, flash = 0, left = 0, tcd = 0, st = { x: 0, y: 0 }, tps = [], shakeE = 0, mic = 0, avg = 255, an = null, abuf = null;
+let pulseTimer = 0, pulsePhase = false, sensorsInitialized = false;
+
+/* ---------- Pantalla ---------- */
+function resize() {
+  dpr = Math.min(devicePixelRatio || 1, 2);
+  W = innerWidth; H = innerHeight;
+  cv.width = W * dpr; cv.height = H * dpr;
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  sw = Math.ceil(W / K); sh = Math.ceil(H / K);
+  sm.width = sw; sm.height = sh; prevLum = null;
+  if (lv) layout();
+}
+function layout() {
+  const cols = lv.map[0].length, rows = lv.map.length;
+  cs = Math.floor(Math.min((W - 12) / cols, (H - 135) / rows));
+  ox = (W - cols * cs) / 2; oy = (H - rows * cs) / 2 + 8;
+}
+addEventListener('resize', resize);
+
+function cover(ctx, w, h) {
+  const vw = vid.videoWidth, vh = vid.videoHeight;
+  const s = Math.max(w / vw, h / vh), dw = vw * s, dh = vh * s;
+  ctx.drawImage(vid, (w - dw) / 2, (h - dh) / 2, dw, dh);
+}
+
+/* ---------- Niveles: carga y reglas ---------- */
+function load(i) {
+  idx = i; lv = LEVELS[i];
+  grid = lv.map.map(r => r.split(''));
+  open = {}; zones = []; tps = []; done = false; target = null; trackCol = null;
+  left = lv.time || 0; tcd = 0; flash = 0; gemsTotal = 0; gemsGot = 0; pulseTimer = 0;
+  grid.forEach((row, y) => row.forEach((c, x) => {
+    if (c === 'S') { ball.x = st.x = x + .5; ball.y = st.y = y + .5; }
+    if (c === 'G') goal = { x, y };
+    if (c === 'T') tps.push({ x, y });
+    if (c === '*') gemsTotal++;
+    if (SENS[c]) zones.push({ x, y, s: SENS[c][0], k: SENS[c][1], L: SENS[c][2], p: 0, hot: false });
+  }));
+  ball.vx = ball.vy = 0;
+  $('t').textContent = `${i + 1}/${LEVELS.length} · ${lv.name}`;
+  $('h').textContent = lv.hint;
+  layout();
+}
+
+function solid(cx, cy) {
+  const c = grid[cy] && grid[cy][cx];
+  if (c === undefined || c === '#' || c === 'O') return true;
+  if (c === 'P') return !pulsePhase;
+  if (c === 'p') return pulsePhase;
+  return COL[c] ? !open[c] : false;
+}
+
+function hit(x, y) {
+  for (let cy = Math.floor(y - R); cy <= Math.floor(y + R); cy++)
+    for (let cx = Math.floor(x - R); cx <= Math.floor(x + R); cx++)
+      if (solid(cx, cy)) {
+        const nx = clamp(x, cx, cx + 1), ny = clamp(y, cy, cy + 1);
+        if ((x - nx) ** 2 + (y - ny) ** 2 < R * R) return grid[cy][cx];
+      }
+  return null;
+}
+
+/* ---------- Visión: movimiento y color ---------- */
+function analyze(dt) {
+  mask = null;
+  if (!cam || vid.readyState < 2) return;
+  cover(sg, sw, sh);
+  const d = sg.getImageData(0, 0, sw, sh).data; lastRGBA = d;
+  const n = sw * sh, lum = new Uint8Array(n); let tot = 0;
+  for (let i = 0; i < n; i++) { lum[i] = (d[i * 4] * 0.3 + d[i * 4 + 1] * 0.59 + d[i * 4 + 2] * 0.11) | 0; tot += lum[i]; }
+  avg = tot / n;
+  const m = new Uint8Array(n); let cnt = 0;
+  if (prevLum && prevLum.length === n)
+    for (let i = 0; i < n; i++) if (Math.abs(lum[i] - prevLum[i]) > 28) { m[i] = 1; cnt++; }
+  prevLum = lum; glob = cnt / n; mask = m;
+  if (trackCol) {
+    let sx = 0, sy = 0, c = 0;
+    for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) {
+      const i = (y * sw + x) * 4;
+      const dr = d[i] - trackCol[0], dg = d[i + 1] - trackCol[1], db = d[i + 2] - trackCol[2];
+      if (dr * dr + dg * dg + db * db < 3800) { sx += x; sy += y; c++; }
+    }
+    if (c > 10) {
+      const p = { x: (sx / c) * K, y: (sy / c) * K };
+      target = target ? { x: target.x + (p.x - target.x) * .35, y: target.y + (p.y - target.y) * .35 } : p;
+      lostT = 0;
+    } else if ((lostT += dt) > 0.6) target = null;
+  }
+}
+
+function sensors(dt) {
+  shakeE *= 0.9;
+  if (an) { an.getByteTimeDomainData(abuf); let q = 0; for (const v of abuf) { const e = (v - 128) / 128; q += e * e; } mic = Math.sqrt(q / abuf.length); }
+  for (const z of zones) {
+    if (open[z.k]) continue;
+    const near = Math.hypot(ball.x - z.x - .5, ball.y - z.y - .5) < (z.s === 'touch' ? .55 : 1.35);
+    if (z.s === 'wave') {
+      let c = 0, a = 0;
+      if (mask) {
+        const sx = (ox + (z.x + .5) * cs) / K, sy = (oy + (z.y + .5) * cs) / K, r = cs * 1.15 / K;
+        for (let y = Math.max(0, sy - r | 0); y < Math.min(sh, sy + r); y++)
+          for (let x = Math.max(0, sx - r | 0); x < Math.min(sw, sx + r); x++) { a++; c += mask[y * sw + x]; }
+      }
+      z.hot = !!mask && a > 0 && c / a > Math.max(0.14, glob * 2.2) && glob < 0.5;
+    } else if (z.s === 'shake') z.hot = near && shakeE > 1;
+    else if (z.s === 'sound') z.hot = near && mic > 0.14;
+    else if (z.s === 'dark') z.hot = near && cam && avg < 38;
+    else z.hot = near;
+    z.p = clamp(z.p + (z.hot ? dt : -dt * 0.55), 0, 1);
+    if (z.p >= (z.s === 'touch' ? 0.01 : 0.6)) openDoor(z.k);
+  }
+}
+
+function openDoor(k) {
+  if (open[k]) return;
+  open[k] = true; navigator.vibrate && navigator.vibrate(60);
+}
+
+/* ---------- Física ---------- */
+function step(dt) {
+  if (done) return;
+
+  // Temporizador de láseres alternos (cada 2.2 segundos)
+  pulseTimer += dt;
+  if (pulseTimer >= 2.2) {
+    pulseTimer = 0;
+    pulsePhase = !pulsePhase;
+  }
+
+  let ax = 0, ay = 0;
+  const tp = lv.mode === 'magnet' ? (target || (!cam && pointer)) : null;
+  if (tp) {
+    let dx = (tp.x - ox) / cs - ball.x, dy = (tp.y - oy) / cs - ball.y;
+    const d = Math.hypot(dx, dy) || 1;
+    if (lv.invert) {
+      // Modo repulsión: empuja si el objeto está cerca
+      if (d < 3.2) {
+        const f = (3.2 - d) * 14;
+        ax = -(dx / d) * f;
+        ay = -(dy / d) * f;
+      }
+    } else {
+      const f = Math.min(d, 2.5) * 17;
+      ax = dx / d * f; ay = dy / d * f;
+    }
+  } else if (lv.mode === 'tilt') {
+    if (hasTilt) { ax = clamp(tilt.x / 28, -1, 1) * 19; ay = clamp((tilt.y - 40) / 28, -1, 1) * 19; }
+    ax += ((keys.ArrowRight ? 1 : 0) - (keys.ArrowLeft ? 1 : 0)) * 19;
+    ay += ((keys.ArrowDown ? 1 : 0) - (keys.ArrowUp ? 1 : 0)) * 19;
+    if (lv.invert) { ax = -ax; ay = -ay; }
+    if (lv.ice) { ax *= .72; ay *= .72; }
+  }
+
+  // Corrientes de aire / cintas transportadoras
+  const curCell = grid[Math.floor(ball.y)] && grid[Math.floor(ball.y)][Math.floor(ball.x)];
+  if (curCell === '>') ax += 14;
+  if (curCell === '<') ax -= 14;
+  if (curCell === 'v') ay += 14;
+  if (curCell === '^') ay -= 14;
+
+  const k = lv.mode === 'magnet' ? 5.5 : (lv.ice ? .45 : 2.1);
+  for (let s = 0; s < 2; s++) {
+    const h = dt / 2, fr = Math.exp(-k * h);
+    ball.vx = clamp((ball.vx + ax * h) * fr, -8.5, 8.5);
+    ball.vy = clamp((ball.vy + ay * h) * fr, -8.5, 8.5);
+
+    let nx = ball.x + ball.vx * h;
+    const hx = hit(nx, ball.y);
+    if (hx) {
+      if (hx === 'P' || hx === 'p') { die(); return; } // Tocar un láser activo mata
+      ball.vx *= (hx === 'O' ? -1.35 : -0.3);
+      if (hx === 'O') navigator.vibrate && navigator.vibrate(25);
+    } else ball.x = nx;
+
+    let ny = ball.y + ball.vy * h;
+    const hy = hit(ball.x, ny);
+    if (hy) {
+      if (hy === 'P' || hy === 'p') { die(); return; }
+      ball.vy *= (hy === 'O' ? -1.35 : -0.3);
+      if (hy === 'O') navigator.vibrate && navigator.vibrate(25);
+    } else ball.y = ny;
+  }
+
+  const cx = Math.floor(ball.x), cy = Math.floor(ball.y), c = grid[cy] && grid[cy][cx];
+  const dc = Math.hypot(ball.x - cx - .5, ball.y - cy - .5);
+
+  // Recoger cristales
+  if (c === '*' && dc < .45) {
+    grid[cy][cx] = '.';
+    gemsGot++;
+    navigator.vibrate && navigator.vibrate(40);
+  }
+
+  // Abismos o láser que se activa encima de la bola
+  if ((c === 'X' && dc < .38) || (c === 'P' && !pulsePhase) || (c === 'p' && pulsePhase)) {
+    die(); return;
+  }
+
+  // Portales
+  if (tcd > 0) tcd -= dt;
+  else if (c === 'T' && dc < .32) {
+    const o = tps.find(q => q.x !== cx || q.y !== cy);
+    if (o) {
+      ball.x = o.x + .5; ball.y = o.y + .5;
+      ball.vx = ball.vy = 0; tcd = 1;
+      navigator.vibrate && navigator.vibrate(30);
+    }
+  }
+
+  // Tiempo límite
+  if (lv.time && (left -= dt) <= 0) {
+    done = true;
+    panel('Se acabó el tiempo', 'El laberinto se ha cerrado. Inténtalo de nuevo.', 'Reintentar nivel', () => load(idx));
+    return;
+  }
+
+  // Meta (solo si se han recogido todos los cristales)
+  if (Math.hypot(ball.x - goal.x - .5, ball.y - goal.y - .5) < .44) {
+    if (gemsGot >= gemsTotal) win();
+  }
+}
+
+function die() {
+  deaths++; flash = 1;
+  // Al morir, reinicia el nivel para que debas superar el circuito de una vez
+  navigator.vibrate && navigator.vibrate([100, 40, 100]);
+  load(idx);
+  flash = 1;
+}
+
+function win() {
+  done = true; navigator.vibrate && navigator.vibrate([80, 50, 80, 50, 120]);
+  const last = idx === LEVELS.length - 1;
+  setTimeout(() => panel(
+    last ? '¡Has dominado el Umbral!' : 'Laberinto superado',
+    last ? `Completaste los ${LEVELS.length} desafíos. Caídas totales: ${deaths}.` : `Siguiente reto: ${LEVELS[idx + 1].name}.`,
+    last ? 'Jugar desde el inicio' : 'Siguiente nivel',
+    () => { if (last) deaths = 0; load(last ? 0 : idx + 1); }
+  ), 450);
+}
+
+function panel(t, p, b, fn) {
+  $('pt').textContent = t; $('pp').textContent = p;
+  $('home-actions').classList.add('hide');
+  $('level-picker').classList.add('hide');
+  $('pause-actions').classList.add('hide');
+  $('result-actions').classList.remove('hide');
+  $('panel').classList.remove('hide');
+  $('result-go').textContent = b;
+  $('result-go').onclick = () => { $('panel').classList.add('hide'); fn(); };
+}
+
+function mostrarMenu() {
+  running = false;
+  paused = false;
+  $('pt').textContent = 'Umbral';
+  $('pp').textContent = '15 laberintos de dificultad creciente. Recolecta cristales, supera láseres sincronizados, corrientes, hielo, portales y domina todos tus sensores.';
+  $('home-actions').classList.remove('hide');
+  $('level-picker').classList.add('hide');
+  $('result-actions').classList.add('hide');
+  $('pause-actions').classList.add('hide');
+  $('panel').classList.remove('hide');
+}
+
+function mostrarNiveles() {
+  running = false;
+  paused = false;
+  $('pt').textContent = 'Elige un nivel';
+  $('pp').textContent = 'Puedes comenzar desde cualquiera de los 15 desafíos.';
+  $('home-actions').classList.add('hide');
+  $('result-actions').classList.add('hide');
+  $('pause-actions').classList.add('hide');
+  $('level-picker').classList.remove('hide');
+  $('panel').classList.remove('hide');
+}
+
+function mostrarPausa() {
+  paused = true;
+  $('pt').textContent = 'Partida en pausa';
+  $('pp').textContent = `${lv.name} · Pulsa Esc o selecciona continuar cuando quieras reanudar.`;
+  $('home-actions').classList.add('hide');
+  $('level-picker').classList.add('hide');
+  $('result-actions').classList.add('hide');
+  $('pause-actions').classList.remove('hide');
+  $('panel').classList.remove('hide');
+}
+
+function continuarPartida() {
+  paused = false;
+  $('pause-actions').classList.add('hide');
+  $('panel').classList.add('hide');
+}
+
+LEVELS.forEach((level, i) => {
+  const option = document.createElement('button');
+  option.type = 'button';
+  option.className = 'level-option';
+  const title = document.createElement('strong');
+  title.textContent = level.name;
+  const description = document.createElement('span');
+  description.textContent = level.hint;
+  option.append(title, description);
+  option.addEventListener('click', () => iniciarPartida(i));
+  $('level-grid').append(option);
+});
+
+$('sel').addEventListener('click', mostrarNiveles);
+$('levels-back').addEventListener('click', mostrarMenu);
+$('result-levels').addEventListener('click', mostrarNiveles);
+$('result-home').addEventListener('click', mostrarMenu);
+$('resume').addEventListener('click', continuarPartida);
+$('pause-home').addEventListener('click', mostrarMenu);
+
+/* ---------- Dibujo ---------- */
+function draw(t) {
+  g.clearRect(0, 0, W, H);
+  if (cam && vid.readyState >= 2) cover(g, W, H);
+  else { g.fillStyle = '#10242b'; g.fillRect(0, 0, W, H); }
+  if (!lv || !running) return;
+
+  const cols = lv.map[0].length, rows = lv.map.length;
+  g.fillStyle = lv.ice ? 'rgba(108, 196, 255, .18)' : 'rgba(11, 21, 25, .28)';
+  g.fillRect(ox, oy, cols * cs, rows * cs);
+
+  for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
+    const c = grid[y][x], px = ox + x * cs, py = oy + y * cs, mx = px + cs / 2, my = py + cs / 2;
+    if (c === '#') {
+      g.fillStyle = 'rgba(11,21,25,.85)'; g.fillRect(px, py, cs, cs);
+      g.strokeStyle = 'rgba(61,224,207,.55)'; g.lineWidth = 1.5; g.strokeRect(px + 1, py + 1, cs - 2, cs - 2);
+    } else if (COL[c]) {
+      const col = COL[c]; g.strokeStyle = col; g.lineWidth = 2;
+      if (!open[c]) {
+        g.fillStyle = col + '99'; g.fillRect(px + 2, py + 2, cs - 4, cs - 4);
+        g.strokeRect(px + 2, py + 2, cs - 4, cs - 4);
+      } else {
+        g.setLineDash([4, 6]); g.strokeRect(px + 4, py + 4, cs - 8, cs - 8); g.setLineDash([]);
+      }
+    } else if (c === 'P' || c === 'p') {
+      const active = (c === 'P' && !pulsePhase) || (c === 'p' && pulsePhase);
+      g.strokeStyle = '#ff4f8b'; g.lineWidth = active ? 3 : 1;
+      if (active) {
+        g.fillStyle = 'rgba(255,79,139,.45)'; g.fillRect(px + 3, py + 3, cs - 6, cs - 6);
+        g.beginPath(); g.moveTo(px, my); g.lineTo(px + cs, my); g.moveTo(mx, py); g.lineTo(mx, py + cs); g.stroke();
+      } else {
+        g.setLineDash([3, 5]); g.strokeRect(px + 4, py + 4, cs - 8, cs - 8); g.setLineDash([]);
+      }
+    } else if (c === 'X') {
+      g.fillStyle = 'rgba(0,0,0,.88)'; g.beginPath(); g.arc(mx, my, cs * .4, 0, 7); g.fill();
+      g.strokeStyle = '#ff4f8b'; g.lineWidth = 2; g.stroke();
+    } else if (c === 'T') {
+      g.strokeStyle = '#b58cff'; g.lineWidth = 2.5;
+      for (let i = 0; i < 2; i++) {
+        g.beginPath(); g.arc(mx, my, cs * (.18 + .16 * i + .04 * Math.sin(t * 5 + i)), 0, 7); g.stroke();
+      }
+    } else if (c === '*') {
+      g.fillStyle = '#3de0cf';
+      g.beginPath();
+      const r = cs * (.24 + .04 * Math.sin(t * 6));
+      g.moveTo(mx, my - r); g.lineTo(mx + r, my); g.lineTo(mx, my + r); g.lineTo(mx - r, my);
+      g.closePath(); g.fill();
+    } else if (c === 'O') {
+      g.fillStyle = 'rgba(255,180,46,.3)'; g.beginPath(); g.arc(mx, my, cs * .38, 0, 7); g.fill();
+      g.strokeStyle = '#ffb42e'; g.lineWidth = 2.5; g.stroke();
+    } else if ('><^v'.includes(c)) {
+      g.fillStyle = 'rgba(61,224,207,.35)';
+      g.font = `bold ${cs * .45}px sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle';
+      const sym = { '>': '»', '<': '«', '^': '▲', 'v': '▼' }[c];
+      g.fillText(sym, mx, my);
+    }
+  }
+
+  // Sensores
+  for (const z of zones) {
+    if (z.s === 'touch' && open[z.k]) continue;
+    const cx = ox + (z.x + .5) * cs, cy = oy + (z.y + .5) * cs, col = COL[z.k];
+    g.strokeStyle = col; g.lineWidth = 2.5;
+    g.beginPath(); g.arc(cx, cy, cs * (.48 + .05 * Math.sin(t * 4)), 0, 7); g.stroke();
+    if (z.p > 0 && z.s !== 'touch') {
+      g.lineWidth = 5; g.beginPath();
+      g.arc(cx, cy, cs * .68, -Math.PI / 2, -Math.PI / 2 + z.p / .6 * Math.PI * 2); g.stroke();
+    }
+    g.font = `${cs * .4}px sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText(open[z.k] ? '✔' : z.L, cx, cy);
+  }
+
+  // Meta
+  const gx = ox + (goal.x + .5) * cs, gy = oy + (goal.y + .5) * cs;
+  const unlocked = gemsGot >= gemsTotal;
+  g.strokeStyle = unlocked ? '#3de0cf' : '#ff4f8b'; g.lineWidth = 3;
+  g.beginPath(); g.arc(gx, gy, cs * (.36 + .05 * Math.sin(t * 5)), 0, 7); g.stroke();
+  g.fillStyle = unlocked ? 'rgba(61,224,207,.3)' : 'rgba(255,79,139,.2)'; g.fill();
+  if (!unlocked) {
+    g.fillStyle = '#eef6f2'; g.font = `bold ${cs * .32}px sans-serif`;
+    g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText('🔒', gx, gy);
+  }
+
+  // Marcador del objeto magnético
+  const tp = lv.mode === 'magnet' && (target || (!cam && pointer));
+  if (tp) {
+    g.strokeStyle = lv.invert ? '#ff4f8b' : '#ffb42e'; g.lineWidth = 2;
+    g.beginPath(); g.arc(tp.x, tp.y, 16, 0, 7);
+    g.moveTo(tp.x - 24, tp.y); g.lineTo(tp.x + 24, tp.y);
+    g.moveTo(tp.x, tp.y - 24); g.lineTo(tp.x, tp.y + 24); g.stroke();
+  }
+
+  const bx = ox + ball.x * cs, by = oy + ball.y * cs;
+  if (lv.fog) {
+    const fg = g.createRadialGradient(bx, by, cs * 1.3, bx, by, cs * 3.1);
+    fg.addColorStop(0, 'rgba(11,21,25,0)'); fg.addColorStop(1, 'rgba(11,21,25,.98)');
+    g.fillStyle = fg; g.fillRect(0, 0, W, H);
+  }
+
+  g.shadowColor = '#3de0cf'; g.shadowBlur = 16; g.fillStyle = '#eef6f2';
+  g.beginPath(); g.arc(bx, by, R * cs, 0, 7); g.fill(); g.shadowBlur = 0;
+
+  if (flash > 0) {
+    g.fillStyle = `rgba(255,79,139,${flash * .45})`; g.fillRect(0, 0, W, H);
+    flash = Math.max(0, flash - .03);
+  }
+
+  $('timer').textContent = lv.time ? `${Math.ceil(Math.max(left, 0))}s` : '';
+  $('timer').style.color = (lv.time && left < 15) ? '#ff4f8b' : '#ffb42e';
+
+  let parts = [];
+  if (!cam) parts.push('Sin cámara (modo PC)');
+  else if (lv.mode === 'magnet') parts.push(!trackCol ? 'Toca tu objeto' : (target ? 'Objeto fijado' : 'Objeto perdido'));
+  if (gemsTotal > 0) parts.push(`Cristales: ${gemsGot}/${gemsTotal}`);
+  if (zones.length > 0) parts.push(`Sensores: ${Object.keys(open).length}/${zones.length}`);
+  if (deaths > 0) parts.push(`Fallos: ${deaths}`);
+
+  const m = parts.join(' · ');
+  if (m !== lastMsg) { $('msg').textContent = m; lastMsg = m; }
+}
+
+/* ---------- Bucle ---------- */
+let last = 0;
+function frame(ts) {
+  const dt = Math.min((ts - last) / 1000 || 0, .033); last = ts;
+  if (running && !paused) { analyze(dt); sensors(dt); step(dt); }
+  draw(ts / 1000); requestAnimationFrame(frame);
+}
+
+/* ---------- Entradas ---------- */
+cv.addEventListener('pointerdown', e => {
+  pointer = { x: e.clientX, y: e.clientY };
+  if (!running || !lv) return;
+  if (lv.mode === 'magnet' && cam && lastRGBA) {
+    const sx = clamp(Math.round(e.clientX / K), 2, sw - 3), sy = clamp(Math.round(e.clientY / K), 2, sh - 3);
+    let r = 0, gg = 0, b = 0;
+    for (let y = -2; y <= 2; y++) for (let x = -2; x <= 2; x++) {
+      const i = ((sy + y) * sw + sx + x) * 4; r += lastRGBA[i]; gg += lastRGBA[i + 1]; b += lastRGBA[i + 2];
+    }
+    trackCol = [r / 25, gg / 25, b / 25]; target = null;
+  }
+  for (const z of zones) {
+    if (Math.hypot(e.clientX - (ox + (z.x + .5) * cs), e.clientY - (oy + (z.y + .5) * cs)) < cs) {
+      z.p = 1; openDoor(z.k);
+    }
+  }
+});
+cv.addEventListener('pointermove', e => { pointer = { x: e.clientX, y: e.clientY }; });
+addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    e.preventDefault();
+    if (e.repeat || !running || done) return;
+    if (paused) continuarPartida();
+    else mostrarPausa();
+    return;
+  }
+  keys[e.key] = true;
+});
+addEventListener('keyup', e => keys[e.key] = false);
+
+async function iniciarPartida(levelIndex) {
+  $('panel').classList.add('hide');
+  paused = false;
+  if (!sensorsInitialized) {
+    try {
+      await Promise.all([window.DeviceOrientationEvent, window.DeviceMotionEvent].filter(x => x && x.requestPermission).map(x => x.requestPermission().catch(() => {})));
+    } catch (e) {}
+    addEventListener('devicemotion', e => {
+      const a = e.accelerationIncludingGravity;
+      if (a && a.x != null && Math.abs(Math.hypot(a.x, a.y, a.z) - 9.8) > 9) shakeE = 2;
+    });
+    addEventListener('deviceorientation', e => {
+      if (e.gamma != null && e.beta != null) { hasTilt = true; tilt.x = e.gamma; tilt.y = e.beta; }
+    });
+    sensorsInitialized = true;
+  }
+  if (!cam) {
+    try {
+      vid.srcObject = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment', width: { ideal: 640 }, height: { ideal: 480 } }, audio: false });
+      await vid.play(); cam = true;
+    } catch (e) { cam = false; }
+  }
+  if (!an) {
+    try {
+      const ms = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const ac = new (window.AudioContext || window.webkitAudioContext)();
+      an = ac.createAnalyser(); an.fftSize = 512; ac.createMediaStreamSource(ms).connect(an); abuf = new Uint8Array(an.fftSize);
+    } catch (e) {}
+  }
+  try { screen.orientation && screen.orientation.lock && screen.orientation.lock('portrait').catch(() => {}); } catch (e) {}
+  load(levelIndex);
+  running = true;
+}
+
+$('go').addEventListener('click', () => iniciarPartida(0));
+
+resize(); requestAnimationFrame(frame);
+</script>
+</body>
+</html>
