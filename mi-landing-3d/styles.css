@@ -1,0 +1,247 @@
+:root {
+  --bg-color: #0f1117;
+  --card-bg: #181b24;
+  --accent-color: #38bdf8;
+  --accent-hover: #0284c7;
+  --scene-accent: #a855f7;
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --border-color: #2a2f3d;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 5%;
+  border-bottom: 1px solid var(--border-color);
+  background-color: rgba(15, 17, 23, 0.9);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  color: var(--accent-color);
+}
+
+.navbar nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-left: 1.5rem;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.navbar nav a:hover {
+  color: var(--text-main);
+}
+
+.hero-section {
+  display: grid;
+  grid-template-columns: 1fr 1.45fr;
+  gap: 2.5rem;
+  align-items: center;
+  padding: 2.5rem 5%;
+  min-height: 82vh;
+}
+
+.badge {
+  display: inline-block;
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--accent-color);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 0.8rem;
+}
+
+.info-container h1 {
+  font-size: 2.5rem;
+  line-height: 1.15;
+  margin-bottom: 0.8rem;
+}
+
+.info-container p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Selector de los 4 modelos */
+.model-switcher {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.model-tab {
+  padding: 0.7rem 1rem;
+  background-color: var(--card-bg);
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.model-tab:hover {
+  color: var(--text-main);
+  border-color: var(--accent-color);
+}
+
+.model-tab.active {
+  background-color: rgba(56, 189, 248, 0.15);
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+/* Estilo especial para el botón de la escena completa */
+.model-tab.scene-btn.active {
+  background-color: rgba(168, 85, 247, 0.18);
+  color: #d8b4fe;
+  border-color: var(--scene-accent);
+}
+
+/* Controles de animación y cámara */
+.controls-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.btn, .select-box {
+  padding: 0.7rem 1.1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.btn.primary {
+  background-color: var(--accent-color);
+  color: #090d16;
+  border: none;
+}
+
+.btn.primary:hover {
+  background-color: var(--accent-hover);
+  color: #ffffff;
+}
+
+.btn.secondary, .select-box {
+  background-color: var(--card-bg);
+  color: var(--text-main);
+}
+
+.btn.secondary:hover, .select-box:hover {
+  border-color: var(--accent-color);
+}
+
+/* Visor 3D */
+.viewer-container {
+  width: 100%;
+  height: 560px;
+  background: radial-gradient(circle at center, #232838 0%, #13161f 100%);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+model-viewer {
+  width: 100%;
+  height: 100%;
+  --poster-color: transparent;
+}
+
+.progress-bar {
+  display: block;
+  width: 50%;
+  height: 6px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+}
+
+.progress-bar.hide {
+  visibility: hidden;
+  transition: visibility 0.3s;
+}
+
+.update-bar {
+  background-color: var(--accent-color);
+  width: 0%;
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.2s;
+}
+
+.specs-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem 5% 4rem;
+}
+
+.spec-card {
+  background-color: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.spec-card h3 {
+  color: var(--accent-color);
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.spec-card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 900px) {
+  .hero-section {
+    grid-template-columns: 1fr;
+    padding-top: 2rem;
+  }
+  .viewer-container {
+    height: 420px;
+  }
+  .info-container h1 {
+    font-size: 2rem;
+  }
+}

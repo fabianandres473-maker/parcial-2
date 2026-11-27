@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portafolio & Visor 3D</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+
+  <!-- 1. AÑADE ESTO PRIMERO: Configura el decodificador Meshopt antes de cargar model-viewer -->
+  <script>
+    self.ModelViewerElement = self.ModelViewerElement || {};
+    self.ModelViewerElement.meshoptDecoderLocation = 'https://cdn.jsdelivr.net/npm/meshoptimizer@0.20.0/meshopt_decoder.js';
+  </script>
+
+  <!-- 2. LUEGO CARGA MODEL-VIEWER (esta línea ya la tienes) -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+</head>
+<body>
+
+  <header class="navbar">
+    <!-- CAMBIA AQUÍ: Tu nombre o marca -->
+    <div class="logo">GALERÍA 3D</div>
+    <nav>
+      <a href="#visor">Visor Interactivo</a>
+      <a href="#detalles">Especificaciones</a>
+    </nav>
+  </header>
+
+  <main id="visor" class="hero-section">
+    
+    <!-- Columna izquierda: Selector de modelos, textos y controles -->
+    <div class="info-container">
+      <span class="badge" id="model-badge">MODELO INDIVIDUAL 01</span>
+      <h1 id="model-title">Namiko</h1>
+      <p id="model-desc">Personaje Namiko con su diseño, ropa y animaciones.</p>
+
+      <!-- BOTONES PARA CAMBIAR ENTRE LOS 3 MODELOS Y LA ESCENA -->
+      <div class="model-switcher">
+        <button class="model-tab active" data-index="0">Modelo 1</button>
+        <button class="model-tab" data-index="1">Modelo 2</button>
+        <button class="model-tab" data-index="2">Modelo 3</button>
+        <button class="model-tab scene-btn" data-index="3">Escena Completa</button>
+      </div>
+
+      <!-- Controles de reproducción y cámara -->
+      <div class="controls-panel">
+        <button id="btn-play-pause" class="btn primary">Pausar Animación</button>
+        
+        <select id="animation-select" class="select-box" aria-label="Seleccionar animación">
+          <option value="">Cargando animaciones...</option>
+        </select>
+
+        <button id="btn-reset-camera" class="btn secondary">Centrar Cámara</button>
+      </div>
+    </div>
+
+    <!-- Columna derecha: Visor 3D único (cambia su src dinámicamente desde JS) -->
+    <div class="viewer-container">
+      <model-viewer 
+        id="visor-glb"
+        src="modelos/Namikofinal-entregableweb.glb"
+        camera-orbit="0deg 75deg 2.5m"
+        min-camera-orbit="auto auto 1.2m"
+        skybox-height="1.5m"
+        alt="Visor de modelos 3D"
+        autoplay 
+        camera-controls 
+        shadow-intensity="1" 
+        exposure="1"
+        interaction-prompt="auto"
+        ar
+        ar-modes="webxr scene-viewer quick-look">
+        
+        <div class="progress-bar" slot="progress-bar">
+          <div class="update-bar"></div>
+        </div>
+
+      </model-viewer>
+    </div>
+
+  </main>
+
+  <section id="detalles" class="specs-section">
+    <div class="spec-card">
+      <h3>Personajes Individuales</h3>
+      <p>Inspección detallada de topología, texturas y ciclos de animación por separado.</p>
+    </div>
+    <div class="spec-card">
+      <h3>Escena Integrada</h3>
+      <p>Composición completa con los 3 personajes, 3 props interactivos y entorno.</p>
+    </div>
+    <div class="spec-card">
+      <h3>Navegación</h3>
+      <p>Click izquierdo: Rotar • Click derecho: Mover • Rueda: Zoom.</p>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
