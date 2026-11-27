@@ -53,6 +53,28 @@ body {
   color: var(--text-main);
 }
 
+.story-section {
+  padding: 1.5rem 5% 0;
+}
+
+.story-context {
+  padding: 1rem 1.25rem;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.story-context h2 {
+  color: var(--accent-color);
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.story-context p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
 .hero-section {
   display: grid;
   grid-template-columns: 1fr 1.45fr;
@@ -208,6 +230,102 @@ model-viewer {
   transition: width 0.2s;
 }
 
+.character-details {
+  padding: 0 5% 2.5rem;
+}
+
+.character-details > h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.character-assets {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(250px, 1fr);
+  gap: 1.5rem;
+}
+
+.character-assets[hidden] {
+  display: none;
+}
+
+.detail-card {
+  min-width: 0;
+  padding: 1.25rem;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.detail-card h3 {
+  margin-bottom: 1rem;
+  color: var(--accent-color);
+  font-size: 1.05rem;
+}
+
+.palette-card h3 span {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+.model-sheet-frame {
+  min-height: 280px;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background-color: #11141c;
+  border: 1px dashed var(--border-color);
+  border-radius: 8px;
+}
+
+.model-sheet-frame img {
+  display: block;
+  max-width: 100%;
+  max-height: 480px;
+  object-fit: contain;
+}
+
+.model-sheet-frame img[hidden] {
+  display: none;
+}
+
+.model-sheet-placeholder,
+.scene-details-message {
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.color-palette {
+  display: grid;
+  gap: 0.75rem;
+  list-style: none;
+}
+
+.palette-color {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-main);
+}
+
+.color-swatch {
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: 0 0 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+}
+
+.color-label code {
+  color: var(--text-muted);
+  font-family: Consolas, monospace;
+}
+
+.scene-details-message[hidden] {
+  display: none;
+}
+
 .specs-section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -240,6 +358,9 @@ model-viewer {
   }
   .viewer-container {
     height: 420px;
+  }
+  .character-assets {
+    grid-template-columns: 1fr;
   }
   .info-container h1 {
     font-size: 2rem;

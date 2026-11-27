@@ -27,6 +27,15 @@
     </nav>
   </header>
 
+  <section class="story-section" aria-labelledby="story-context-title">
+    <div class="story-context">
+      <h2 id="story-context-title">Sinopsis</h2>
+      <p>Se situa en un mundo habitado por diferentes especies, nos centraremos principalmente en la raza Mizujin, una raza que cuenta con caracteristicas propias de animales acuaticos como branqueas y pequeñas aletas además de contar con mayor velocidad en el agua, esta se encuentra ubicada en un entorno playero siendo el unico lugar de facil acceso al mar, y con ello, una gran economia. Gracias a esa facilidad, la raza de los humanos querian conquistarlos para monopolizar todo el comercio de la zona, así tuvieran que eliminar una raza completa.</p>
+      
+      <p>La historia se centra en la historia de Nerissa, la hija del rey de los Mizujin, una honorable arquera y una gran estratega la cual tendria que planear el como defender su hogar y a su gente, pero no estaría sola, la acompañaria Namiko, una informante que trabajaba como bailarina en un bar local, juntas tendrian que liderar su pueblo y enfrentarse a Tiryon, un pirata de la raza humana y el lider asignado para este ataque.</p>
+    </div>
+  </section>
+
   <main id="visor" class="hero-section">
     
     <!-- Columna izquierda: Selector de modelos, textos y controles -->
@@ -80,6 +89,28 @@
     </div>
 
   </main>
+
+  <section id="character-details" class="character-details" aria-labelledby="character-details-title">
+    <h2 id="character-details-title">Diseño de Namiko</h2>
+    <div id="character-assets" class="character-assets">
+      <div class="detail-card model-sheet-card">
+        <h3>Model sheet</h3>
+        <div class="model-sheet-frame">
+          <img id="character-sheet" alt="" hidden>
+          <p id="model-sheet-placeholder" class="model-sheet-placeholder">
+            Añade la ruta de la imagen del model sheet en los datos del personaje.
+          </p>
+        </div>
+      </div>
+      <div class="detail-card palette-card">
+        <h3>Paleta de colores <span>(muestras editables)</span></h3>
+        <ul id="character-palette" class="color-palette"></ul>
+      </div>
+    </div>
+    <p id="scene-details-message" class="scene-details-message" hidden>
+      Selecciona un personaje individual para ver su model sheet y su paleta de colores.
+    </p>
+  </section>
 
   <section id="detalles" class="specs-section">
     <div class="spec-card">
