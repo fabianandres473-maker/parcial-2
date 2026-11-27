@@ -4,8 +4,8 @@
 const catalogoModelos = [
   {
     badge: "MODELO INDIVIDUAL 01",
-    titulo: "Nombre del Personaje 1",
-    descripcion: "Descripción del primer personaje, su diseño, ropa o animación principal.",
+    titulo: "Namiko",
+    descripcion: "Una joven de 20 años y Ia mejor amiga de Nerissa, es una informante que pasaba su tiempo trabajando en el bar local más popular del pueblo como bailarina recabando cualquier información importante que se les escape a los ebrios que circulan cerca, cuenta con una gracia hipnotica, una sutileza y agilidad excepcional además de una memoria enciclopédica y percepción corporal. sin embargo, no cuenta con mucha fuerza, siendo difícil que soporte golpes fuertes y, debido a su trabajo, tiene aislamiento emocional lo que hace que le cueste confiar en las personas.",
     archivo: "modelos/Namikofinal-entregableweb.glb",
     hdr: "entornos/playa.hdr",
     mostrarFondo: true, // true = se ve el HDR de fondo 360° e ilumina
@@ -14,7 +14,7 @@ const catalogoModelos = [
   {
     badge: "MODELO INDIVIDUAL 02",
     titulo: "Nerisa",
-    descripcion: "Personaje Nerisa con su diseño, ropa y animaciones.",
+    descripcion: "Una joven de 22 años y la princesa de los Mizujin, es la princesa y la estratega militar más respetada de su pueblo y la más apta para este cargo, cuenta con una capacidad de adaptación táctica increible además de contar con una vision y punteria excepcional con el arco. Sin embargo, su rigidez y orgullo noble le dificultan improvisar ante tácticas caóticas a pesar de la fuerza para cargar su arco no puede mantener un combate a corta distancia por mucho tiempo",
     archivo: "modelos/Nerisa-entregable.glb",
     hdr: "entornos/playa.hdr",
     mostrarFondo: true,
@@ -22,8 +22,8 @@ const catalogoModelos = [
   },
   {
     badge: "MODELO INDIVIDUAL 03",
-    titulo: "Nombre del Personaje 3",
-    descripcion: "Descripción del tercer modelo individual.",
+    titulo: "Tiryon",
+    descripcion: "El lider de los piratas enviado por los humanos, tiene 36 años y es reconocido por su habilidad con el manejo de la espada, pese a su gran fuerza no cuenta con mucha inteligencia, y si entra en modo berserker hace que estas cualidades se noten aun más, además, gracias a su fuerza, tiene una resistencia por encima del promedio",
     archivo: "modelos/modelo3.glb",
     hdr: "entornos/hdr_modelo3.hdr",
     mostrarFondo: true,
