@@ -6,11 +6,17 @@ const catalogoModelos = [
     badge: "MODELO INDIVIDUAL 01",
     titulo: "Namiko",
     descripcion: "Una joven de 20 años y Ia mejor amiga de Nerissa, es una informante que pasaba su tiempo trabajando en el bar local más popular del pueblo como bailarina recabando cualquier información importante que se les escape a los ebrios que circulan cerca, cuenta con una gracia hipnotica, una sutileza y agilidad excepcional además de una memoria enciclopédica y percepción corporal. sin embargo, no cuenta con mucha fuerza, siendo difícil que soporte golpes fuertes y, debido a su trabajo, tiene aislamiento emocional lo que hace que le cueste confiar en las personas.",
-    modelSheet: "",
+    modelSheet: "modelsheets/Namiko-modelsheet.jpeg",
     palette: [
-      { nombre: "Rosa", hex: "#D88E9B" },
-      { nombre: "Azul oscuro", hex: "#2F3548" },
-      { nombre: "Arena", hex: "#E6C6AA" }
+      { nombre: "Naranja", hex: "#FFAA00" },
+      { nombre: "Amarillo", hex: "#FFD727" },
+      { nombre: "Cian claro", hex: "#6CE9F7" },
+      { nombre: "Turquesa", hex: "#4AD6AE" },
+      { nombre: "Rosa claro", hex: "#FFDFDB" },
+      { nombre: "Verde", hex: "#1A9C75" },
+      { nombre: "Verde oscuro", hex: "#147758" },
+      { nombre: "Menta claro", hex: "#B7FFE9" },
+      { nombre: "Verde grisáceo", hex: "#35886E" }
     ],
     archivo: "modelos/Namikofinal-entregableweb.glb",
     hdr: "entornos/playa.hdr",
@@ -21,11 +27,17 @@ const catalogoModelos = [
     badge: "MODELO INDIVIDUAL 02",
     titulo: "Nerisa",
     descripcion: "Una joven de 22 años y la princesa de los Mizujin, es la princesa y la estratega militar más respetada de su pueblo y la más apta para este cargo, cuenta con una capacidad de adaptación táctica increible además de contar con una vision y punteria excepcional con el arco. Sin embargo, su rigidez y orgullo noble le dificultan improvisar ante tácticas caóticas a pesar de la fuerza para cargar su arco no puede mantener un combate a corta distancia por mucho tiempo",
-    modelSheet: "",
+    modelSheet: "modelsheets/Nerisa-modelsheet.jpeg",
     palette: [
-      { nombre: "Turquesa", hex: "#3B8E9A" },
-      { nombre: "Dorado", hex: "#D8C8A1" },
-      { nombre: "Azul noche", hex: "#263044" }
+      { nombre: "Verde oscuro", hex: "#147758" },
+      { nombre: "Menta claro", hex: "#B7FFE9" },
+      { nombre: "Durazno claro", hex: "#FFE4C9" },
+      { nombre: "Turquesa", hex: "#4AD6AE" },
+      { nombre: "Cian claro", hex: "#6CE9F7" },
+      { nombre: "Azul", hex: "#537FBC" },
+      { nombre: "Azul claro", hex: "#88B5CC" },
+      { nombre: "Azul grisáceo", hex: "#4A7393" },
+      { nombre: "Verde", hex: "#1A9C75" }
     ],
     archivo: "modelos/Nerisa-entregable.glb",
     hdr: "entornos/playa.hdr",
@@ -36,14 +48,19 @@ const catalogoModelos = [
     badge: "MODELO INDIVIDUAL 03",
     titulo: "Tiryon",
     descripcion: "El lider de los piratas enviado por los humanos, tiene 36 años y es reconocido por su habilidad con el manejo de la espada, pese a su gran fuerza no cuenta con mucha inteligencia, y si entra en modo berserker hace que estas cualidades se noten aun más, además, gracias a su fuerza, tiene una resistencia por encima del promedio",
-    modelSheet: "",
+    modelSheet: "modelsheets/Tiryon-modelsheet.jpeg",
     palette: [
-      { nombre: "Rojo oscuro", hex: "#8A3D33" },
-      { nombre: "Bronce", hex: "#A47C3B" },
-      { nombre: "Carbón", hex: "#2C2B2A" }
+      { nombre: "Marrón oscuro", hex: "#38220A" },
+      { nombre: "Negro", hex: "#000000" },
+      { nombre: "Azul noche", hex: "#283A6A" },
+      { nombre: "Marrón", hex: "#54391A" },
+      { nombre: "Blanco", hex: "#FFFFFF" },
+      { nombre: "Rojo", hex: "#A81515" },
+      { nombre: "Bronce", hex: "#7C562A" },
+      { nombre: "Tostado", hex: "#BD9174" }
     ],
-    archivo: "modelos/modelo3.glb",
-    hdr: "entornos/hdr_modelo3.hdr",
+    archivo: "modelos/Pirata-entregable.glb",
+    hdr: "entornos/puerto.hdr",
     mostrarFondo: true,
     exposicion: 1.0
   },
@@ -51,8 +68,8 @@ const catalogoModelos = [
     badge: "ESCENA COMPLETA",
     titulo: "Escena Principal Integrada",
     descripcion: "Escenario completo con los 3 personajes animados y los 3 objetos interactivos.",
-    archivo: "modelos/escena_completa.glb",
-    hdr: "entornos/hdr_escena.hdr",
+    archivo: "modelos/escena-v1.glb",
+    hdr: "entornos/sea-sky.hdr",
     mostrarFondo: true, // Cambia a false si no quieres que se vea por fuera de las paredes de la escena
     exposicion: 1.0
   }
